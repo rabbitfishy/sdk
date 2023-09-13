@@ -49,7 +49,7 @@ MODULEENTRY32 game_scanner::capture_module(const char* modules)
 
 DWORD game_scanner::scan(const char* modules, const char* signature)
 {
-	MODULEENTRY32 modules_entry = capture_module(modules);
+	MODULEENTRY32 modules_entry = this->capture_module(modules);
 
 	if (!modules_entry.hModule) 
 		return FALSE;
