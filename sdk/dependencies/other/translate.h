@@ -79,7 +79,7 @@ public:
 	std::string format(const char* layout, ...)
 	{
 		char buffer[256];
-		if(std::strlen(layout) >= sizeof(buffer))
+		if (std::strlen(layout) >= sizeof(buffer))
 			return std::string();
 
 		va_list arguments;
