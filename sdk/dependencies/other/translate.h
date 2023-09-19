@@ -75,7 +75,7 @@ public:
 		return ascii_data;
 	}
 
-	// formating int or float variable to strings.
+	// format decimal number variable to string.
 	std::string format(const char* layout, ...)
 	{
 		char buffer[256];
