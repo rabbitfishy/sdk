@@ -4,7 +4,7 @@ enum font_alignment : int
 {
 	align_left		= 1,
 	align_right		= 1 << 1,
-	align_center	= 1 << 2
+	align_center		= 1 << 2
 };
 
 class render_font
