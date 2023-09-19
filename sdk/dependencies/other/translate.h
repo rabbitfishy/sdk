@@ -11,7 +11,7 @@ public:
 	// used for weapon esp name cleaning.
 	std::wstring clean(std::wstring input)
 	{
-		std::wstring clean = this->add_space(replace(input.data()));
+		std::wstring clean = this->add_space(this->replace(input.data()));
 		return clean;
 	}
 
@@ -67,12 +67,28 @@ public:
 
 		while (ss.good()) 
 		{
-			std::bitset<8> bits;					// get 8 bit data set. (since 8 bit equals to one character)
-			ss >> bits;								// divide binary data by bits two times.
+			std::bitset<8> bits;			// get 8 bit data set. (since 8 bit equals to one character)
+			ss >> bits;				// divide binary data by bits two times.
 			ascii_data += char(bits.to_ulong());	// convert those bits and assign it to the string variable to store converted data.
 		}
 
 		return ascii_data;
+	}
+
+	// formating int or float variable to strings.
+	std::string format(const char* layout, ...)
+	{
+		char buffer[256];
+		if(std::strlen(layout) >= sizeof(buffer))
+			return std::string();
+
+		va_list arguments;
+		va_start(arguments, layout);
+		vsprintf_s(buffer, sizeof(buffer), layout, arguments);
+		std::string result = buffer;
+		va_end(arguments);
+
+		return result;
 	}
 
 private:
