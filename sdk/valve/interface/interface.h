@@ -81,8 +81,8 @@ public:
 	game_base_client* base_client				= nullptr;
 	game_entity_list* entity_list				= nullptr;
 	game_client_console* game_console			= nullptr;
-	game_prediction* prediction					= nullptr;
-	game_movement* movement						= nullptr;
+	game_prediction* prediction				= nullptr;
+	game_movement* movement					= nullptr;
 
 #pragma endregion
 
@@ -92,26 +92,26 @@ public:
 	game_engine_trace* engine_trace				= nullptr;
 	game_engine_sound* engine_sound				= nullptr;
 	game_engine_vgui* engine_vgui				= nullptr;
-	game_network_container* network_container	= nullptr;
+	game_network_container* network_container		= nullptr;
 	game_event_manager* game_event				= nullptr;
 	game_debug_overlay* debug_overlay			= nullptr;
-	game_model_info* model_info					= nullptr;
+	game_model_info* model_info				= nullptr;
 
 #pragma endregion
 
 #pragma region vgui.dll
 
-	game_panel* panel							= nullptr;
-	game_surface* surface						= nullptr;
+	game_panel* panel					= nullptr;
+	game_surface* surface					= nullptr;
 
 #pragma endregion
 
 #pragma region others
 
-	game_engine_convar* convar					= nullptr;
-	game_localize* localize						= nullptr;
+	game_engine_convar* convar				= nullptr;
+	game_localize* localize					= nullptr;
 	game_client_types* game_types				= nullptr;
-	game_material_system* material_system		= nullptr;
+	game_material_system* material_system			= nullptr;
 	game_studio_render* studio_render			= nullptr;
 	game_input_system* input_system				= nullptr;
 	game_physics_surface_props* physics			= nullptr;
@@ -122,10 +122,10 @@ public:
 
 	game_client_mode* client_mode				= nullptr;
 	game_global_vars* global_vars				= nullptr;
-	game_key_value_system* key_value_system		= nullptr;
+	game_key_value_system* key_value_system			= nullptr;
 	game_client_state* client_state				= nullptr;
 	game_weapon_system* weapon_system			= nullptr;
-	game_input* input							= nullptr;
+	game_input* input					= nullptr;
 
 #pragma endregion
 
