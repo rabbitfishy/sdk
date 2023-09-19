@@ -1,4 +1,5 @@
 #pragma once
+#include "../../netvar/netvar.h"
 
 typedef DWORD h_font;
 
@@ -59,9 +60,10 @@ public:
 	// ref: https://www.unknowncheats.me/forum/2547880-post10.html
 	// ref: https://github.com/otvv/csgo-linux-cheat-sdk/blob/cc3bc2d6ae4ab3e305f681228728083db6d6de7f/csgo-sdk/src/interfaces/isurface.hpp#L191
 	void	set_clip_rect(int x, int y, int w, int h) { return virtuals->call<void>(this, 147, x, y, w, h); }
-	void	disable_clip(bool disable) { this->enable_clip = !disable; }
+	void	disable_clip(bool disable) { this->enable_clip() = !disable; }
 
 private:
-	std::byte	_pad0[0x3A7];
-	bool		enable_clip;
+	// ref: https://www.unknowncheats.me/forum/2450313-post1.html
+	// ( 0x280 = 0xA0 * 4 )
+	OFFSET(enable_clip, bool, 0x280)
 };
