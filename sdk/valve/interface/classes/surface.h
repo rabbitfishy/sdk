@@ -6,7 +6,7 @@ typedef DWORD h_font;
 
 enum font_draw_type : int
 {
-	font_draw_default		= 0,
+	font_draw_default	= 0,
 	font_draw_non_additive,
 	font_draw_additive,
 	font_draw_type_count	= 2
@@ -14,19 +14,19 @@ enum font_draw_type : int
 
 enum font_flags
 {
-	fontflag_none,
-	fontflag_italic			= 0x001,
-	fontflag_underline		= 0x002,
-	fontflag_strikeout		= 0x004,
-	fontflag_symbol			= 0x008,
-	fontflag_antialias		= 0x010,
-	fontflag_gaussian_blur	= 0x020,
-	fontflag_rotary			= 0x040,
-	fontflag_dropshadow		= 0x080,
-	fontflag_additive		= 0x100,
-	fontflag_outline		= 0x200,
-	fontflag_custom			= 0x400,
-	fontflag_bitmap			= 0x800,
+	font_none,
+	font_italic			= 0x001,
+	font_underline			= 0x002,
+	font_strikeout			= 0x004,
+	font_symbol			= 0x008,
+	font_antialias			= 0x010,
+	font_gaussian_blur		= 0x020,
+	font_rotary			= 0x040,
+	font_dropshadow			= 0x080,
+	font_additive			= 0x100,
+	font_outline			= 0x200,
+	font_custom			= 0x400,
+	font_bitmap			= 0x800
 };
 
 #pragma endregion
@@ -46,7 +46,7 @@ public:
 	void	draw_print_text(const wchar_t* text, int text_length, font_draw_type draw_type = font_draw_default) { virtuals->call<void>(this, 28, text, text_length, draw_type); }
 	void	draw_set_texture_rgba(int index, const unsigned char* rgba, int width, int height) { virtuals->call<void>(this, 37, index, rgba, width, height); }
 	void	draw_set_texture(int index) { virtuals->call<void>(this, 38, index); }
-	int		create_new_texture_id(bool procedural = false) { return virtuals->call<int>(this, 43, procedural); }
+	int	create_new_texture_id(bool procedural = false) { return virtuals->call<int>(this, 43, procedural); }
 	void	unlock_cursor() { return virtuals->call<void>(this, 66); }
 	void	lock_cursor() { return virtuals->call<void>(this, 67); }
 	h_font	font_create() { return virtuals->call<h_font>(this, 71); }
