@@ -1,32 +1,33 @@
 #pragma once
 
-// this is a 2d vector made only for drawing menus and not actual calculation.
-class vector
+// this is vector 2d but renamed it from 'vector' to 'point' for less confusion.
+// its made only for drawing gui framework and not for actual calculation.
+class point
 {
 public:
-	constexpr vector() : x{ }, y{ } { }
-	constexpr vector(int x, int y) : x{ x }, y{ y } { }
-	constexpr vector(const vector& v) : x{ v.x }, y{ v.y } { }
+	constexpr point() : x{ }, y{ } { }
+	constexpr point(int x, int y) : x{ x }, y{ y } { }
+	constexpr point(const point& p) : x{ p.x }, y{ p.y } { }
 
 	// equality operators.
-	bool operator==(const vector& v) const { return v.x == this->x && v.y == this->y; }
-	bool operator!=(const vector& v) const { return v.x != this->x || v.y != this->y; }
+	bool operator==(const point& p) const { return p.x == this->x && p.y == this->y; }
+	bool operator!=(const point& p) const { return p.x != this->x || p.y != this->y; }
 
 	// copy assignment.
-	constexpr vector& operator=(const vector& v)
+	constexpr point& operator=(const point& p)
 	{
-		this->x = v.x; this->y = v.y;
+		this->x = p.x; this->y = p.y;
 		return *this;
 	}
 
 	// negation-operator.
-	constexpr vector operator-() const { return vector{ -this->x, -this->y }; }
+	constexpr point operator-() const { return point{ -this->x, -this->y }; }
 
 	// arithmetic operators.
-	vector operator+(const vector& v) const { return { this->x + v.x, this->y + v.y }; }
-	vector operator-(const vector& v) const { return { this->x - v.x, this->y - v.y }; }
-	vector operator*(const vector& v) const { return { this->x * v.x, this->y * v.y }; }
-	vector operator/(const vector& v) const { return { this->x / v.x, this->y / v.y }; }
+	point operator+(const point& p) const { return { this->x + p.x, this->y + p.y }; }
+	point operator-(const point& p) const { return { this->x - p.x, this->y - p.y }; }
+	point operator*(const point& p) const { return { this->x * p.x, this->y * p.y }; }
+	point operator/(const point& p) const { return { this->x / p.x, this->y / p.y }; }
 
 	int x, y;
 };
