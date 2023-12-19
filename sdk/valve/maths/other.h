@@ -1,7 +1,7 @@
 #pragma once
 
 // this is vector 2d but renamed it from 'vector' to 'point' for less confusion.
-// its only made for drawing 2d objects and not for actual calculation.
+// it was only made for drawing 2d objects and calculating 2d objects position.
 class point
 {
 public:
