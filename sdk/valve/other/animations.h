@@ -6,7 +6,7 @@
 #include "studio.h"
 #include <assert.h>
 
-#define max_layer 13
+#define max_animation_layer 13
 
 #pragma region animations flags
 
