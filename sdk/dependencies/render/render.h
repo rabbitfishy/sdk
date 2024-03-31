@@ -5,10 +5,10 @@
 #include "../other/translate.h"
 #include "font.h"
 
-enum gradient_direction : bool
+enum gradient_direction : int
 {
-	vertical	= false,
-	horizontal	= true
+	vertical	= 0,
+	horizontal	= 1
 };
 
 struct game_fonts
@@ -28,7 +28,7 @@ public:
 	void line(int x, int y, int w, int h, color color);
 	void filled_rect(int x, int y, int w, int h, color color);
 	void outlined_rect(int x, int y, int w, int h, color color);
-	void gradient(int x, int y, int w, int h, color first, color second, gradient_direction direction = { });
+	void gradient(int x, int y, int w, int h, color first, color second, gradient_direction direction = vertical);
 
 	void start_clip(rect area);
 	void end_clip();
