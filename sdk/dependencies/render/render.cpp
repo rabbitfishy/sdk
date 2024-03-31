@@ -34,13 +34,13 @@ void game_render::outlined_rect(int x, int y, int w, int h, color color)
 	interfaces->surface->draw_outlined_rect(x, y, x + w, y + h);
 }
 
-void game_render::gradient(int x, int y, int w, int h, color first, color second, gradient_direction direction)
+void game_render::gradient(int x, int y, int w, int h, color first, color second, gradient_orientation orientation)
 {
 	interfaces->surface->draw_set_color(first.r, first.g, first.b, first.a);
-	interfaces->surface->draw_filled_rect_fade(x, y, x + w, y + h, 255, 255, direction);
+	interfaces->surface->draw_filled_rect_fade(x, y, x + w, y + h, 255, 255, orientation);
 
 	interfaces->surface->draw_set_color(second.r, second.g, second.b, second.a);
-	interfaces->surface->draw_filled_rect_fade(x, y, x + w, y + h, 0, 255, direction);
+	interfaces->surface->draw_filled_rect_fade(x, y, x + w, y + h, 0, 255, orientation);
 }
 
 void game_render::start_clip(rect area)
