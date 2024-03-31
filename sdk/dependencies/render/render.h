@@ -5,7 +5,7 @@
 #include "../other/translate.h"
 #include "font.h"
 
-enum gradient_direction : int
+enum gradient_orientation : int
 {
 	vertical	= 0,
 	horizontal	= 1
@@ -28,7 +28,7 @@ public:
 	void line(int x, int y, int w, int h, color color);
 	void filled_rect(int x, int y, int w, int h, color color);
 	void outlined_rect(int x, int y, int w, int h, color color);
-	void gradient(int x, int y, int w, int h, color first, color second, gradient_direction direction = vertical);
+	void gradient(int x, int y, int w, int h, color first, color second, gradient_orientation orientation = vertical);
 
 	void start_clip(rect area);
 	void end_clip();
