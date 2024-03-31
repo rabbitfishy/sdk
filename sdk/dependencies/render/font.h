@@ -17,7 +17,7 @@ public:
 		interfaces->surface->set_font_glyph_set(this->handle, name, height, weight, 0, 0, flags);
 	}
 
-	void text(int x, int y, std::string text, color color, font_alignment flags = { })
+	void text(int x, int y, std::string text, color color, font_alignment flags = align_left)
 	{
 		if (flags)
 		{
@@ -32,7 +32,7 @@ public:
 		interfaces->surface->draw_print_text(translate->unicode(text).c_str(), text.length());
 	}
 
-	void wtext(int x, int y, std::wstring text, color color, font_alignment flags = { })
+	void wtext(int x, int y, std::wstring text, color color, font_alignment flags = align_left)
 	{
 		if (flags)
 		{
