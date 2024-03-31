@@ -46,13 +46,13 @@ void game_render::gradient(int x, int y, int w, int h, color first, color second
 void game_render::start_clip(rect area)
 {
 	rect canvas = { area.x, area.y, area.x + area.w, area.y + area.h };
-	interfaces->surface->disable_clip(false);
+	interfaces->surface->disable_clip(true);
 	interfaces->surface->set_clip_rect(canvas.x, canvas.y, canvas.w, canvas.h);
 }
 
 void game_render::end_clip()
 {
-	interfaces->surface->disable_clip(true);
+	interfaces->surface->disable_clip(false);
 }
 
 void game_render::setup_screen()
