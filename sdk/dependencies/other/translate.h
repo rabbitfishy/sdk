@@ -28,6 +28,13 @@ public:
 		return input;
 	}
 
+	std::string remove_space(std::string input)
+	{
+		std::replace(input.begin(), input.end(), ' ', '\0');
+		std::string convert = std::string(input.begin(), input.end());
+		return convert;
+	}
+
 	// convert unicode to ascii (utf8).
 	std::string ascii(std::wstring input)
 	{
