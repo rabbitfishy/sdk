@@ -54,32 +54,47 @@ DWORD game_scanner::scan(const char* modules, const char* signature)
 	if (!modules_entry.hModule) 
 		return FALSE;
 
+	// remove all the spaces in the signature array.
+	std::string sig = translate->remove_space(signature);
+
+	// get our start and end of memory.
 	DWORD start = (DWORD)modules_entry.modBaseAddr;
-	DWORD end = start + modules_entry.modBaseSize;
-	DWORD first_match = 0;
-	const char* p = signature;
+	DWORD end	= start + modules_entry.modBaseSize;
+
+	// keep count of our pattern matches.
+	int first_match = 0;
+
+	// store our pattern for comparing later.
+	const char* pattern = sig.c_str();
 
 	for (DWORD i = start; i < end; i++)
 	{
-		if (!*p)
+		// our pattern don't match in game memory section then return.
+		if (!pattern)
 			return first_match;
 
-		if (*(PBYTE)p == '\?' || *(BYTE*)i == data_byte(p))
+		// our pattern found a wild card or the pattern itself matched.
+		if (*pattern == '\?' || i == data_byte(pattern))
 		{
+			// we haven't found our first match yet then loop through the pattern array.
 			if (!first_match)
 				first_match = i;
 
-			if (!p[2])
+			// isn't our second pattern index then return the first match.
+			if (!pattern[2])
 				return first_match;
 
-			if (*(PWORD)p == '\?\?' || *(PBYTE)p != '\?')
-				p += 3;
+			// our pattern have 2 wild cards then extend 3 indexes ahead.
+			// otherwise we don't have a wild card then extend it by 2 indexes ahead.
+			if (*pattern == '\?\?' || *pattern != '\?')
+				pattern += 3;
 			else
-				p += 2;
+				pattern += 2;
 		}
 		else
 		{
-			p = signature;
+			// all those conditions haven't been met then start all over again.
+			pattern		= sig.c_str();
 			first_match = 0;
 		}
 	}
