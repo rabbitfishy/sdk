@@ -1,5 +1,8 @@
 #pragma once
 #include "../../maths/utl_vector.h"
+#include "../../../dependencies/memory/modules.h"
+#include "../../../dependencies/memory/signatures.h"
+#include "../../../dependencies/memory/virtual.h"
 
 #pragma region engine trace flags
 
