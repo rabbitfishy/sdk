@@ -145,7 +145,7 @@ public:
 	base_entity*		hit_entity;				// entity hit by trace
 	int					hitbox;					// box hit by trace in studio
 
-	inline bool did_hit() const { return (fraction < 1.0f || all_solid || start_solid); }
+	inline bool did_hit() const { return (fraction < 1.f || all_solid || start_solid); }
 	inline bool is_visible() const { return (fraction > 0.97f); }
 
 private:
