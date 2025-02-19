@@ -1,5 +1,5 @@
 #pragma once
-#include <functional>
+#include "../../maths/utl_vector.h"
 
 #pragma region engine trace flags
 
@@ -21,10 +21,31 @@ enum game_trace_type : int
 	trace_filter_sky
 };
 
-enum debug_trace_counter_behavior : int
+enum collision_group : int
 {
-	trace_counter_set = 0,
-	trace_counter_inc,
+	collision_none = 0,
+	collision_debris,						// collides with nothing but world and static stuff
+	collision_debris_trigger,				// same as debris, but hits triggers
+	collision_interactive_debris,			// collides with everything except other interactive debris or debris
+	collision_interactive,					// collides with everything except interactive debris or debris
+	collision_player,
+	collision_breakable_glass,
+	collision_vehicle,
+	collision_player_movement,				// for HL2, same as Collision_Group_Player, for / TF2, this filters out other players and CBaseObjects
+	collision_npc,							// generic NPC group
+	collision_in_vehicle,					// for any entity inside a vehicle
+	collision_weapon,						// for any weapons that need collision detection
+	collision_vehicle_clip,					// vehicle clip brush to restrict vehicle movement
+	collision_projectile,					// projectiles!
+	collision_door_blocker,					// blocks entities not permitted to get near moving doors
+	collision_passable_door,				// doors that the player shouldn't collide with
+	collision_dissolving,					// things that are dissolving are in this group
+	collision_push_away,					// nonsolid on client and server, pushaway in player code
+	collision_npc_actor,					// used so NPCs in scripts ignore the player.
+	collision_npc_scripted,					// used for NPCs in scripts that should not collide with each other
+	collision_pz_clip,
+	collision_debris_block_projectile,		// only collides with bullets
+	collision_last_shared
 };
 
 enum game_trace_contents : unsigned int
@@ -88,7 +109,7 @@ enum game_trace_masks : unsigned int
 	mask_npc_world_static_fluid	= contents_solid | contents_window | contents_monster_clip,
 	mask_split_area_portal		= contents_water | contents_slime,
 	mask_current				= contents_current_0 | contents_current_90 | contents_current_180 | contents_current_270 | contents_current_up | contents_current_down,
-	mask_dead_solid				= contents_solid | contents_player_clip | contents_window | contents_grate,
+	mask_dead_solid				= contents_solid | contents_player_clip | contents_window | contents_grate
 };
 
 #pragma endregion
@@ -210,65 +231,120 @@ struct game_ray
 };
 
 class handle_entity;
-class game_base_trace_filter
+class base_trace_filter
 {
 public:
 	virtual bool				should_hit_entity(handle_entity* entity, int contents_mask) = 0;
 	virtual game_trace_type		trace_types() const = 0;
 };
 
-class game_trace_filter : public game_base_trace_filter
+class trace_filter : public base_trace_filter
 {
-	using game_filter_callback = std::function<bool(handle_entity*, int)>;
 public:
-	game_trace_filter(const handle_entity* skip_entity, game_trace_type types = trace_everything)
-		: skip(skip_entity), trace_type(types) { }
+	game_trace_type trace_types() const override
+	{
+		return trace_everything;
+	}
+};
 
-	game_trace_filter(game_filter_callback&& check_callback, game_trace_type types = trace_everything)
-		: check_callback(std::move(check_callback)), trace_type(types) { }
+class trace_filter_entities_only : public base_trace_filter
+{
+public:
+	game_trace_type trace_types() const override
+	{
+		return trace_entities_only;
+	}
+};
+
+class trace_filter_world_only : public base_trace_filter
+{
+public:
+	bool should_hit_entity(handle_entity* entity, int contents_mask) override
+	{
+		return false;
+	}
+
+	game_trace_type trace_types() const override
+	{
+		return trace_world_only;
+	}
+};
+
+class trace_filter_world_and_props_only : public base_trace_filter
+{
+public:
+	bool should_hit_entity(handle_entity* entity, int contents_mask) override
+	{
+		return false;
+	}
+
+	game_trace_type trace_types() const override
+	{
+		return trace_everything;
+	}
+};
+
+class game_trace_filter : public trace_filter
+{
+	using should_hit_callback = bool(__cdecl*)(handle_entity* entity, int contents_mask);
+
+public:
+	game_trace_filter(const handle_entity* entity, int collision_group = collision_none, should_hit_callback should_hit = nullptr)
+		: skip(entity), collision(collision_group), callback(should_hit) {
+	}
 
 	bool should_hit_entity(handle_entity* entity, int contents_mask) override
 	{
-		// if given user defined callback - check it.
-		if (check_callback != nullptr)
-			return check_callback(entity, contents_mask);
-
-		// otherwise skip entity if given.
-		return entity != skip;
+		using should_hit_entity_details = bool(__thiscall*)(game_trace_filter*, const handle_entity*, int);
+		static auto original_constructor = SEARCH(modules->client, signatures::interfaces::should_hit_entity::signature()).cast<should_hit_entity_details>();
+		return original_constructor(this, entity, contents_mask);
 	}
 
-	game_trace_type trace_types() const override { return trace_type; }
+	inline const handle_entity* skip_entity() const
+	{
+		return skip;
+	}
+
+	inline int collision_group() const
+	{
+		return collision;
+	}
 
 private:
-	const handle_entity* skip				= nullptr;
-	game_filter_callback check_callback		= nullptr;
-	game_trace_type trace_type				= trace_everything;
+	const handle_entity*	skip;		// 0x00
+	int						collision;	// 0x04
+	should_hit_callback		callback;	// 0x08
 };
 
-class game_trace_list_data
+class trace_filter_skip_two_entities : public game_trace_filter
 {
 public:
-	virtual			~game_trace_list_data() { }
-	virtual void	reset() = 0;
-	virtual bool	is_empty() = 0;
-	virtual bool	can_trace_ray(const game_ray& ray) = 0;
-};
+	trace_filter_skip_two_entities(const handle_entity* first = nullptr, const handle_entity* second = nullptr, int collision_group = collision_none)
+		: game_trace_filter(first, collision_group), skip2(second) {
+	}
 
-class game_entity_enumerator
-{
-public:
-	// this gets called with each handle.
-	virtual bool enumerate_entity(handle_entity* entity) = 0;
+	bool should_hit_entity(handle_entity* entity, int contents_mask) override
+	{
+		using should_hit_entity2_details = bool(__thiscall*)(trace_filter_skip_two_entities*, const handle_entity*, int);
+		static auto original_constructor = SEARCH(modules->client, signatures::interfaces::should_hit_entity2::signature()).cast<should_hit_entity2_details>();
+		return original_constructor(this, entity, contents_mask);
+	}
+
+private:
+	const handle_entity* skip2;
 };
 
 class collideable;
 class game_engine_trace
 {
 public:
-	virtual int		point_contents(const vector_3d& abs_position, int contents_mask = mask_all, handle_entity** entity = nullptr) = 0;
-	virtual int		point_contents_world_only(const vector_3d& abs_position, int contents_mask = mask_all) = 0;
-	virtual int		point_contents_collideable(collideable* collide, const vector_3d& abs_position) = 0;
-	virtual void	clip_ray_to_entity(const game_ray& ray, unsigned int mask, handle_entity* entity, game_trace* trace) = 0;
-	virtual void	clip_ray_to_collideable(const game_ray& ray, unsigned int mask, collideable* collide, game_trace* trace) = 0;
-	virtual void	trace_ray(const game_ray& ray, unsigned int mask, game_trace_filter* trace_filter, game_trace* trace) = 0;
+	int		point_contents(const vector_3d& abs_position, int contents_mask = mask_all, handle_entity** entity = nullptr) { return virtuals->call<int>(this, 0, &abs_position, contents_mask, entity); }
+	int		point_contents_world_only(const vector_3d& abs_position, int contents_mask = mask_all) { return virtuals->call<int>(this, 1, this, &abs_position, contents_mask); }
+	int		point_contents_collideable(collideable* collide, const vector_3d& abs_position) { return virtuals->call<int>(this, 2, collide, &abs_position); }
+
+	void	clip_ray_to_entity(const game_ray& ray, unsigned int mask, handle_entity* entity, game_trace* trace) { return virtuals->call<void>(this, 3, this, &ray, mask, entity, trace); }
+	void	clip_ray_to_collideable(const game_ray& ray, unsigned int mask, collideable* collide, game_trace* trace) { return virtuals->call<void>(this, 4, &ray, mask, collide, trace); }
+	void	trace_ray(const game_ray& ray, unsigned int mask, game_trace_filter* filter, game_trace* trace) { return virtuals->call<void>(this, 5, &ray, mask, filter, trace); }
+
+	bool	brush_info(int brush, utl_vector<game_brush_side_info>* info, int* contents) { return virtuals->call<bool>(this, 18, brush, info, contents); }
 };
