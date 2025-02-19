@@ -1,4 +1,5 @@
 #include "../hooks.h"
+
 #include <intrin.h>
 #pragma intrinsic(_ReturnAddress)
 
