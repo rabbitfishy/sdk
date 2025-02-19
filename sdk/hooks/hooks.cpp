@@ -10,9 +10,9 @@ void game_hooks::setup()
 		console->log(log_type::log_error, "failed to install minhook!");
 
 	// virtual hook target.
-	void* alloc_key_value_memory_target		= virtuals->get(interfaces->key_value_system, hk_index::alloc_key_value_memory);
-	void* create_move_target				= virtuals->get(interfaces->base_client, hk_index::create_move);
-	void* paint_traverse_target				= virtuals->get(interfaces->panel, hk_index::paint_traverse);
+	void* alloc_key_value_memory_target		= virtuals->get<void*>(interfaces->key_value_system, hk_index::alloc_key_value_memory);
+	void* create_move_target				= virtuals->get<void*>(interfaces->base_client, hk_index::create_move);
+	void* paint_traverse_target				= virtuals->get<void*>(interfaces->panel, hk_index::paint_traverse);
 
 	// add hooks here.
 	create_hook("alloc_key_value_memory", alloc_key_value_memory_target, hk_functions::alloc_key_value_memory, &originals->alloc_key_value_memory_original);
