@@ -171,7 +171,7 @@ private:
 
 struct game_ray
 {
-	game_ray() : world_axis_transform{ }, is_ray{ }, is_swept{ } { };
+	game_ray() : world_axis_transform{ }, is_ray{ }, is_swept{ } { }
 
 	game_ray(const vector_3d& ray_start, const vector_3d& ray_end)
 	{
