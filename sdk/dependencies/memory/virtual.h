@@ -7,7 +7,7 @@ class game_virtuals
 {
 public:
 	// virtual function pointer of specified class at given index.
-	template <typename t = void*>
+	template <typename t>
 	constexpr t get(void* thisptr, std::size_t index)
 	{
 		return (*static_cast<t**>(thisptr))[index];
