@@ -14,13 +14,16 @@ public:
 
 	NETVAR("CBaseEntity->m_bSpotted", spotted, bool)
 
+	NETVAR("CBaseEntity->m_vecOrigin", origin, vector_3d)
+
 	NETVAR("CBaseEntity->m_angRotation", rotation, q_angle)
 
 	NETVAR("CBaseCombatCharacter->m_hActiveWeapon", active_weapon_handle, base_handle)
 
-	DATAMAP(this->description_map(), "m_angAbsRotation", abs_rotation, q_angle)
-	DATAMAP(this->description_map(), "m_rgflCoordinateFrame", coordinate_frame, const matrix_3x4)
-	DATAMAP(this->description_map(), "m_MoveType", move_type, int)
+	DATAMAP(this->prediction_map(), "m_MoveType", move_type, int)
+	DATAMAP(this->prediction_map(), "m_angAbsRotation", abs_rotation, q_angle)
+
+	DATAMAP(this->description_map(), "m_rgflCoordinateFrame", coordinate_frame, const matrix_3x4&)
 };
 
 class base_animating : public base_entity
