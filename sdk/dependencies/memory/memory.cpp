@@ -82,7 +82,7 @@ DWORD game_scanner::scan(const char* modules, const char* signature)
 				return first_match;
 
 			// our pattern have 2 wild cards then extend 3 indexes ahead.
-			// otherwise we don't have a wild card then extend it by 2 indexes ahead.
+			// otherwise we have a wild card then extend it by 2 indexes ahead.
 			if (*(WORD*)pattern == '\?\?' || *(BYTE*)pattern != '\?')
 				pattern += 3;
 			else
