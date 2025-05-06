@@ -12,7 +12,7 @@ bool game_maths::world_to_screen(const vector_3d& origin, vector_2d& screen)
     if (width < 0.001f)
         return false;
 
-    float inverse = 1.f / width;
+    const float inverse = 1.f / width;
 
     screen = { (world_to_screen[0][0] * origin.x + world_to_screen[0][1] * origin.y + world_to_screen[0][2] * origin.z + world_to_screen[0][3]) * inverse,
                (world_to_screen[1][0] * origin.x + world_to_screen[1][1] * origin.y + world_to_screen[1][2] * origin.z + world_to_screen[1][3]) * inverse };
