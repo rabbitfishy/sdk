@@ -9,7 +9,7 @@ bool game_maths::world_to_screen(const vector_3d& origin, vector_2d& screen)
 
     float width = world_to_screen[3][0] * origin.x + world_to_screen[3][1] * origin.y + world_to_screen[3][2] * origin.z + world_to_screen[3][3];
 
-    if (width < 0.01f)
+    if (width < 0.001f)
         return false;
 
     float inverse = 1.f / width;
