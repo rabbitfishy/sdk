@@ -67,11 +67,11 @@ DWORD game_scanner::scan(const char* modules, const char* signature)
 	for (DWORD i = start; i < end; i++)
 	{
 		// our pattern don't match in game memory section then return.
-		if (!pattern)
+		if (!*pattern)
 			return first_match;
 
 		// our pattern found a wild card or the pattern itself matched.
-		if (*pattern == '\?' || i == data_byte(pattern))
+		if (*(std::uint8_t*)pattern == '\?' || *(std::uint8_t*)i == data_byte(pattern))
 		{
 			// we haven't found our first match yet then loop through the pattern array.
 			if (!first_match)
@@ -83,7 +83,7 @@ DWORD game_scanner::scan(const char* modules, const char* signature)
 
 			// our pattern have 2 wild cards then extend 3 indexes ahead.
 			// otherwise we don't have a wild card then extend it by 2 indexes ahead.
-			if (*pattern == '\?\?' || *pattern != '\?')
+			if (*(std::uint16_t*)pattern == '\?\?' || *(std::uint8_t*)pattern != '\?')
 				pattern += 3;
 			else
 				pattern += 2;
