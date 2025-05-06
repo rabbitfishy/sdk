@@ -20,7 +20,10 @@ public:
 
 	NETVAR("CBaseCombatCharacter->m_hActiveWeapon", active_weapon_handle, base_handle)
 
+	DATAMAP(this->prediction_map(), "m_iEFlags", eflags, int)
 	DATAMAP(this->prediction_map(), "m_MoveType", move_type, int)
+
+	DATAMAP(this->prediction_map(), "m_vecAbsVelocity", abs_velocity, vector_3d)
 	DATAMAP(this->prediction_map(), "m_angAbsRotation", abs_rotation, q_angle)
 
 	DATAMAP(this->description_map(), "m_rgflCoordinateFrame", coordinate_frame, const matrix_3x4&)
@@ -120,8 +123,6 @@ public:
 	NETVAR("CBasePlayer->m_vecVelocity[0]", velocity, vector_3d)
 
 	NETVAR("CBasePlayer->m_hGroundEntity", ground_entity_handle, base_handle)
-
-	DATAMAP(this->prediction_map(), "m_iEFlags", eflags, int)
 
 	base_combat_weapon* active_weapon();
 
