@@ -56,7 +56,7 @@ public:
 	void					get_view_angles(q_angle& view_angle) { return virtuals->call<void>(this, 18, std::ref(view_angle)); }
 	void					set_view_angles(q_angle& view_angle) { return virtuals->call<void>(this, 19, std::ref(view_angle)); }
 	bool					in_game() { return virtuals->call<bool>(this, 26); }
-	view_matrix&			world_to_screen_matrix() { return virtuals->call<view_matrix&>(this, 37); }
+	const view_matrix&			world_to_screen_matrix() { return virtuals->call<const view_matrix&>(this, 37); }
 	game_net_channel_info*	net_info() { return virtuals->call<game_net_channel_info*>(this, 78); }
 	bool					hltv() { return virtuals->call<bool>(this, 93); }
 };
