@@ -54,9 +54,6 @@ DWORD game_scanner::scan(const char* modules, const char* signature)
 	if (!modules_entry.hModule) 
 		return FALSE;
 
-	// remove all the spaces in the signature array.
-	std::string sig = translate->remove_space(signature);
-
 	// get our start and end of memory.
 	DWORD start = (DWORD)modules_entry.modBaseAddr;
 	DWORD end	= start + modules_entry.modBaseSize;
@@ -65,7 +62,7 @@ DWORD game_scanner::scan(const char* modules, const char* signature)
 	int first_match = 0;
 
 	// store our pattern for comparing later.
-	const char* pattern = sig.c_str();
+	const char* pattern = signature;
 
 	for (DWORD i = start; i < end; i++)
 	{
@@ -94,7 +91,7 @@ DWORD game_scanner::scan(const char* modules, const char* signature)
 		else
 		{
 			// all those conditions haven't been met then start all over again.
-			pattern		= sig.c_str();
+			pattern		= signature;
 			first_match = 0;
 		}
 	}
