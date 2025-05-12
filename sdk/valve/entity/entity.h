@@ -112,8 +112,7 @@ public:
 	NETVAR("CBasePlayer->m_fFlags", flags, int)
 	NETVAR("CBasePlayer->m_iHealth", health, int)
 	NETVAR("CBasePlayer->m_nTickBase", tick_base, int)
-
-	NETVAR_PTR("CBasePlayer->m_iObserverMode", observer_mode, int)
+	NETVAR("CBasePlayer->m_iObserverMode", observer_mode, int)
 
 	NETVAR("CBasePlayer->m_aimPunchAngle", aim_punch, q_angle)
 	NETVAR("CBasePlayer->m_viewPunchAngle", view_punch, q_angle)
@@ -121,6 +120,7 @@ public:
 	NETVAR_OFFSET_PTR("CBasePlayer->deadflag", 0x4, view_angles, q_angle)
 
 	NETVAR("CBasePlayer->m_vecVelocity[0]", velocity, vector_3d)
+	NETVAR("CBasePlayer->m_vecViewOffset[0]", view_offset, vector_3d)
 
 	NETVAR("CBasePlayer->m_hGroundEntity", ground_entity_handle, base_handle)
 
