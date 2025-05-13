@@ -199,15 +199,14 @@ struct game_ray
 
 	game_ray(const vector_3d& ray_start, const vector_3d& ray_end)
 	{
-		start					= ray_start;
 		delta					= vector_aligned(ray_end - ray_start);
+		is_swept				= (delta.length_sqr() != 0.f);
+		world_axis_transform	= nullptr;
+		is_ray					= true;
+		start					= ray_start;
 
 		start_offset.zero();
 		extents.zero();
-
-		world_axis_transform	= nullptr;
-		is_ray					= true;
-		is_swept				= (delta.length_sqr() != 0.f);
 	}
 
 	game_ray(const vector_3d& ray_start, const vector_3d& ray_end, const vector_3d& ray_mins, const vector_3d& ray_maxs)
