@@ -3,22 +3,19 @@
 
 game_animation_state::game_animation_state(cs_player* player)
 {
-	using constructor_details = void(__thiscall*)(game_animation_state*, cs_player*);
-	static auto original_constructor = SEARCH(modules->client, signatures::other::animation_state_constructor::signature()).cast<constructor_details>();
+	static auto original_constructor = SEARCH(modules->client, signatures::other::animation_state_constructor::signature()).cast<void(__thiscall*)(game_animation_state*, cs_player*)>();
 	original_constructor(this, player);
 }
 
 void game_animation_state::update(const q_angle& view_angle)
 {
-	using update_details = void(__vectorcall*)(game_animation_state*, void*, float, float, float, void*);
-	static auto original_constructor = SEARCH(modules->client, signatures::other::animation_state_update::signature()).cast<update_details>();
+	static auto original_constructor = SEARCH(modules->client, signatures::other::animation_state_update::signature()).cast<void(__vectorcall*)(game_animation_state*, void*, float, float, float, void*)>();
 	original_constructor(this, nullptr, view_angle.z, view_angle.y, view_angle.x, nullptr);
 }
 
 void game_animation_state::reset()
 {
-	using reset_details = void(__thiscall*)(game_animation_state*);
-	static auto original_constructor = SEARCH(modules->client, signatures::other::animation_state_reset::signature()).cast<reset_details>();
+	static auto original_constructor = SEARCH(modules->client, signatures::other::animation_state_reset::signature()).cast<void(__thiscall*)(game_animation_state*)>();
 	original_constructor(this);
 }
 
