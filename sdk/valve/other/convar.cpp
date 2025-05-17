@@ -48,7 +48,7 @@ void game_spoofed_convar::spoof()
 		sprintf_s(dummy_name, 128U, "%s", original_name);
 
 		// create temporary convar.
-		dummy_convar = static_cast<game_convar*>(malloc(sizeof(game_convar)));
+		dummy_convar = static_cast<game_convar*>(std::malloc(sizeof(game_convar)));
 
 		if (dummy_convar == nullptr)
 			return;
