@@ -49,8 +49,8 @@ public:
 		
 	static unsigned long& model_bone_counter()
 	{
-		static auto original_model_bone_counter = SEARCH(modules->client, signatures::entity::model_bone_counter::signature()).add<std::uint8_t*>(0x2);
-		return *reinterpret_cast<unsigned long*>(original_model_bone_counter);
+		static auto model_bone_counter_details = SEARCH(modules->client, signatures::entity::model_bone_counter::signature()).add<std::uint8_t*>(0x2);
+		return *reinterpret_cast<unsigned long*>(model_bone_counter_details);
 	}
 
 	void lock_studio_hdr()
@@ -83,8 +83,8 @@ class base_animating_overlay : public base_animating
 public:
 	utl_vector<game_animation_layer>& animation_overlays()
 	{
-		static const std::uintptr_t original_animation_overlays = *SEARCH(modules->client, signatures::entity::animation_overlays::signature()).add<std::uintptr_t*>(0x2);
-		return *reinterpret_cast<utl_vector<game_animation_layer>*>(reinterpret_cast<std::uint8_t*>(this) + original_animation_overlays);
+		static const std::uintptr_t animation_overlay_details = *SEARCH(modules->client, signatures::entity::animation_overlays::signature()).add<std::uintptr_t*>(0x2);
+		return *reinterpret_cast<utl_vector<game_animation_layer>*>(reinterpret_cast<std::uint8_t*>(this) + animation_overlay_details);
 	}
 
 	bool update_dispatch_layer(game_animation_layer* layer, game_studio_hdr* hdr, int sequence) { return virtuals->call<bool>(this, 247, layer, hdr, sequence); }
