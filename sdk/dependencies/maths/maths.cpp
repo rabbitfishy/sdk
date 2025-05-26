@@ -110,7 +110,7 @@ void game_maths::vector_angles(const vector_3d& forward, q_angle& angles)
 q_angle game_maths::calculate_angle(const vector_3d& start, const vector_3d& end)
 {
     q_angle angle = { };
-    vector_3d delta = (start - end).normalized();
+    vector_3d delta = (end - start);
     vector_angles(delta, angle);
     return angle;
 }
