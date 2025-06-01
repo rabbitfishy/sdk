@@ -51,5 +51,5 @@ vector_3d base_animating::bone_position(int bone_index)
 
 	// given invalid bone index or model header is corrupted.
 	assert(false);
-	return vector_3d{ 0, 0, 0 };
+	return vector_3d();
 }
