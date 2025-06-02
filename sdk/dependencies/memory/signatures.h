@@ -33,7 +33,6 @@ namespace signatures
 		PATTERN(set_abs_origin, "55 8B EC 83 E4 F8 51 53 56 57 8B F1 E8");
 		PATTERN(set_abs_angle, "55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1 E8");
 		PATTERN(animation_overlays, "8B 89 ? ? ? ? 8D 0C D1");
-		PATTERN(lock_studio_hdr, "55 8B EC 51 53 8B D9 56 57 8D B3 ? ? ? ? FF");
 	};
 
 	struct other
