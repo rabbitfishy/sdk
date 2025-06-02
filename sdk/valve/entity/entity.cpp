@@ -54,6 +54,38 @@ vector_3d base_animating::bone_position(int bone_index)
 	return vector_3d();
 }
 
+vector_3d base_animating::hitbox_position(int hitbox_index)
+{
+	game_studio_hdr* model_hdr = this->model_ptr();
+
+	if (model_hdr != nullptr && hitbox_index > game_hitbox::hitbox_invalid && hitbox_index < game_hitbox::hitbox_max)
+	{
+		game_studio_bounding_box* hitbox = model_hdr->hitbox_set(this->hitbox_set())->hitbox(hitbox_index);
+
+		if (hitbox != nullptr)
+		{
+			if (!this->setup_bones(nullptr, -1, bone_used_by_anything, interfaces->global_vars->current_time))
+				return vector_3d();
+
+			const game_bone_accessor& accessor = this->bone_accessor();
+			const matrix_3x4& transform_bone = accessor.matrix_bones[hitbox->bone];
+
+			matrix_3x4 bone_orientation = maths->transform_matrix(hitbox->offset_orientation);
+			bone_orientation = transform_bone.concat_transforms(bone_orientation);
+
+			const vector_3d min = maths->vector_transform(hitbox->mins, bone_orientation),
+							max = maths->vector_transform(hitbox->maxs, bone_orientation);
+
+			// get centre of hitbox.
+			return (min + max) * 0.5f;
+		}
+	}
+
+	// given invalid hitbox index or model header is corrupted.
+	assert(false);
+	return vector_3d();
+}
+
 vector_3d cs_player::shoot_position()
 {
 	vector_3d position = this->eye_position();
