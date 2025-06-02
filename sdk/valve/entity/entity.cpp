@@ -60,7 +60,9 @@ vector_3d cs_player::shoot_position()
 
 	if (this->is_new_animation_state())
 	{
-		if (const game_animation_state* animation_state = this->animation_state(); animation_state != nullptr)
+		const game_animation_state* animation_state = this->animation_state();
+		
+		if (!animation_state)
 			animation_state->modify_eye_position(position);
 	}
 
