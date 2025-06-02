@@ -39,7 +39,6 @@ public:
 
 	NETVAR("CBaseAnimating->m_bClientSideAnimation", client_side_animation, bool)
 
-	NETVAR_OFFSET("CBaseAnimating->m_nForceBone", 0x4, most_recent_model_bone_counter, unsigned long)
 	NETVAR_OFFSET("CBaseAnimating->m_nForceBone", 0x3C, bone_attachments, utl_vector<base_handle>)
 	NETVAR_OFFSET("CBaseAnimating->m_nForceBone", 0x18, bone_accessor, game_bone_accessor)
 
@@ -47,12 +46,6 @@ public:
 	NETVAR_OFFSET("CBaseAnimating->m_hLightingOrigin", -0x18, allow_jiggle_bones, bool)
 	NETVAR_OFFSET("CBaseAnimating->m_hLightingOrigin", 0x8, studio_hdr, game_studio_hdr*)
 		
-	static unsigned long& model_bone_counter()
-	{
-		static auto original_model_bone_counter = SEARCH(modules->client, signatures::entity::model_bone_counter::signature()).add<std::uint8_t*>(0x2);
-		return *reinterpret_cast<unsigned long*>(original_model_bone_counter);
-	}
-
 	void lock_studio_hdr()
 	{
 		static auto original_lock_studio_hdr = SEARCH(modules->client, signatures::entity::lock_studio_hdr::signature()).cast<void(__thiscall*)(base_animating*)>();
@@ -70,8 +63,6 @@ public:
 
 		return nullptr;
 	}
-
-	bool bone_cache_valid() { return (this->most_recent_model_bone_counter() == this->model_bone_counter()); }
 
 	int bone_by_hash(const hash32 bone_hash);
 	vector_3d bone_position(int bone_index);
