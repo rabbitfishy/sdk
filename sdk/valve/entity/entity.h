@@ -136,6 +136,12 @@ public:
 	NETVAR("CCSPlayer->m_bGunGameImmunity", immunity, bool)
 	NETVAR("CCSPlayer->m_bHasHeavyArmor", heavy_armor, bool)
 
+	NETVAR_OFFSET("CCSPlayer->m_flLastExoJumpTime", 0x8, is_new_animation_state, bool)
+
+	NETVAR("CCSPlayer->m_angEyeAngles[0]", eye_angle, q_angle)
+
+	NETVAR_OFFSET("CCSPlayer->m_bIsScoped", -0x14, animation_state, game_animation_state*)
+
 	vector_3d shoot_position();
 };
 
