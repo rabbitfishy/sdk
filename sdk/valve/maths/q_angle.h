@@ -94,7 +94,7 @@ public:
 	{
 		this->x = std::isfinite(this->x) ? std::remainderf(this->x, 360.f) : 0.f;
 		this->y = std::isfinite(this->y) ? std::remainderf(this->y, 360.f) : 0.f;
-		this->z = std::clamp(this->z, -50.f, 50.f);
+		this->z = std::isfinite(this->z) ? std::remainderf(this->z, 360.f) : 0.f;
 	}
 
 	q_angle normalized()
@@ -108,7 +108,7 @@ public:
 	{
 		this->x = std::clamp(this->x, -89.f, 89.f);
 		this->y = std::clamp(this->y, -180.f, 180.f);
-		this->z = std::clamp(this->z, -50.f, 50.f);
+		this->z = std::clamp(this->z, -45.f, 45.f);
 	}
 
 	q_angle clamped()
