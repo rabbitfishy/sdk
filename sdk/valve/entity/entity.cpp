@@ -53,3 +53,18 @@ vector_3d base_animating::bone_position(int bone_index)
 	assert(false);
 	return vector_3d();
 }
+
+vector_3d cs_player::shoot_position()
+{
+	// @ida C_CSPlayer::Weapon_ShootPos(): client.dll, server.dll -> "55 8B EC 56 8B 75 08 57 8B F9 56 8B 07 FF 90"
+
+	vector_3d position = this->eye_position();
+
+	if (this->is_new_animation_state())
+	{
+		if (const game_animation_state* animation_state = this->animation_state(); animation_state != nullptr)
+			animation_state->modify_eye_position(position);
+	}
+
+	return position;
+}
