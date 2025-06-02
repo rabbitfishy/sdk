@@ -42,8 +42,8 @@ vector_3d base_animating::bone_position(int bone_index)
 
 	if (model_hdr != nullptr && bone_index >= 0 && bone_index < model_hdr->bone_count)
 	{
-		if (!this->bone_cache_valid())
-			this->setup_bones(nullptr, -1, bone_used_by_anything, interfaces->global_vars->current_time);
+		if (!this->setup_bones(nullptr, -1, bone_used_by_anything, interfaces->global_vars->current_time))
+			return vector_3d();
 
 		const game_bone_accessor& accessor = this->bone_accessor();
 		return accessor.matrix_bones[bone_index].get_origin();
