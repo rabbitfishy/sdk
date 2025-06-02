@@ -70,7 +70,7 @@ vector_3d base_animating::hitbox_position(int hitbox_index)
 			const game_bone_accessor& accessor = this->bone_accessor();
 			const matrix_3x4& transform_bone = accessor.matrix_bones[hitbox->bone];
 
-			matrix_3x4 bone_orientation = maths->transform_matrix(hitbox->offset_orientation);
+			matrix_3x4 bone_orientation = maths->angle_matrix(hitbox->offset_orientation);
 			bone_orientation = transform_bone.concat_transforms(bone_orientation);
 
 			const vector_3d min = maths->vector_transform(hitbox->mins, bone_orientation),
