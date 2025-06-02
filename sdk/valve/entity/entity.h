@@ -152,6 +152,8 @@ public:
 	NETVAR("CCSPlayer->m_bHasHelmet", helmet, bool)
 	NETVAR("CCSPlayer->m_bGunGameImmunity", immunity, bool)
 	NETVAR("CCSPlayer->m_bHasHeavyArmor", heavy_armor, bool)
+
+	vector_3d shoot_position();
 };
 
 class weapon_cs_base : public base_combat_weapon
