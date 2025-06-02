@@ -2,7 +2,7 @@
 #include "../classes/clients.h"
 #include "../other/animations.h"
 
-class base_entity : public client_entity
+class base_entity : public game_client_entity
 {
 public:
 	NETVAR("CBaseEntity->m_iTeamNum", team, int)
