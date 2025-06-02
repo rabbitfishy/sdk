@@ -66,6 +66,7 @@ public:
 
 	int bone_by_hash(const hash32 bone_hash);
 	vector_3d bone_position(int bone_index);
+	vector_3d hitbox_position(int hitbox_index);
 };
 
 class base_animating_overlay : public base_animating
