@@ -26,7 +26,7 @@ int base_animating::bone_by_hash(const hash32 bone_hash)
 		{
 			game_studio_bone* bone = model_hdr->bone(i);
 
-			if (bone != nullptr && HASH_COMPILE(bone->name()) == bone_hash)
+			if (bone != nullptr && HASH_RUNTIME(bone->name()) == bone_hash)
 				return i;
 		}
 	}
