@@ -44,24 +44,15 @@ public:
 
 	NETVAR_OFFSET("CBaseAnimating->m_hLightingOrigin", -0x20, last_bone_setup_time, float)
 	NETVAR_OFFSET("CBaseAnimating->m_hLightingOrigin", -0x18, allow_jiggle_bones, bool)
-	NETVAR_OFFSET("CBaseAnimating->m_hLightingOrigin", 0x8, studio_hdr, game_studio_hdr*)
-		
-	void lock_studio_hdr()
-	{
-		static auto original_lock_studio_hdr = SEARCH(modules->client, signatures::entity::lock_studio_hdr::signature()).cast<void(__thiscall*)(base_animating*)>();
-		original_lock_studio_hdr(this);
-	}
 
 	game_studio_hdr* model_ptr()
 	{
-		if (!this->studio_hdr() && this->get_model() != nullptr)
-			this->lock_studio_hdr();
+		game_studio_hdr* hdr = interfaces->model_info->studio_model(this->get_model());
 
-		game_studio_hdr* hdr = this->studio_hdr();
-		if (hdr != nullptr)
-			return hdr;
+		if (!hdr)
+			return nullptr;
 
-		return nullptr;
+		return hdr;
 	}
 
 	int bone_by_hash(const hash32 bone_hash);
