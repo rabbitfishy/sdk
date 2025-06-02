@@ -121,7 +121,7 @@ public:
 	q_angle sanitize() const
 	{
 		q_angle cleaned = *this;
-		cleaned.normalized().clamped();
+		cleaned.clamped().normalized();
 		return cleaned;
 	}
 
