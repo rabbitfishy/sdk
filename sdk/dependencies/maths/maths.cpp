@@ -36,6 +36,19 @@ void game_maths::transform_vector(vector_3d& start, matrix_3x4& matrix, vector_3
             start.dot(matrix[2]) + matrix[2][3] };
 }
 
+matrix_3x4 game_maths::angle_matrix(const q_angle& angle)
+{
+    float cos_x = std::cos(deg_to_rad(angle.x)), sin_x = std::sin(deg_to_rad(angle.x));
+    float cos_y = std::cos(deg_to_rad(angle.y)), sin_y = std::sin(deg_to_rad(angle.y));
+    float cos_z = std::cos(deg_to_rad(angle.z)), sin_z = std::sin(deg_to_rad(angle.z));
+
+    return {
+        cos_x * cos_y, sin_x * sin_z * cos_y - cos_z * sin_y, (sin_x * cos_z * cos_y + sin_z * sin_y), 0.f,
+        cos_x * sin_y, sin_x * sin_z * sin_y + cos_z * cos_y, (sin_x * cos_z * sin_y - sin_z * cos_y), 0.f,
+        -sin_x, sin_z * cos_x, cos_z * cos_x, 0.f
+    };
+}
+
 void game_maths::normalize_angle(float& angle)
 {
     // bad number.
