@@ -130,6 +130,12 @@ public:
 		if (!this) return false;
 		return this->health() > 0;
 	}
+
+	vector_3d eye_position()
+	{
+		vector_3d position = this->client_entity()->abs_origin() + this->view_offset();
+		return position;
+	}
 };
 
 class cs_player : public base_player
