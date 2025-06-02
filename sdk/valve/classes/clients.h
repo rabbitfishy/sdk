@@ -8,7 +8,7 @@
 class collideable;
 class client_networkable;
 class client_renderable;
-class client_entity;
+class game_client_entity;
 class base_entity;
 class client_thinkable;
 class client_alpha_property;
@@ -19,7 +19,7 @@ public:
 	virtual collideable*			collideable() = 0;
 	virtual client_networkable*		networkable() = 0;
 	virtual client_renderable*		renderable() = 0;
-	virtual client_entity*			client_entity() = 0;
+	virtual game_client_entity*		client_entity() = 0;
 	virtual base_entity*			entity() = 0;
 	virtual client_thinkable*		thinkable() = 0;
 	virtual client_alpha_property*	alpha_property() = 0;
@@ -278,7 +278,7 @@ public:
 
 class mouth_info;
 
-class client_entity : public client_unknown, public client_renderable, public client_networkable, public client_thinkable
+class game_client_entity : public client_unknown, public client_renderable, public client_networkable, public client_thinkable
 {
 public:
 	virtual void				release(void) = 0;
