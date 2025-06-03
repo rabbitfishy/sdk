@@ -154,19 +154,7 @@ public:
 	virtual int							get_body() = 0;
 	virtual void						color_modulation(float* color) = 0;
 	virtual bool						lod_test() = 0;
-
-	// gucci.
-	bool setup_bones(matrix_3x4* bone_to_world_out, int max_bones, int bone_mask, float current_time)
-	{
-		if (!this || !this->unknown())
-			return false;
-
-		if (!this->unknown()->renderable())
-			return false;
-
-		return virtuals->call<bool>(this->unknown()->renderable(), 13, bone_to_world_out, max_bones, bone_mask, current_time);
-	}
-
+	virtual bool						setup_bones(matrix_3x4* bone_to_world_out, int max_bones, int bone_mask, float current_time) = 0;
 	virtual void						setup_weights(const matrix_3x4* bone_to_world, int flex_weight_count, float* flex_weights, float* flex_delayed_weights) = 0;
 	virtual void						do_animation_events(void) = 0;
 	virtual void*						pvs_notify_interface() = 0;
