@@ -79,12 +79,9 @@ public:
 	bool operator==(game_address address) const { return this->cast<std::uintptr_t>() == address.cast<std::uintptr_t>(); }
 	bool operator!=(game_address address) const { return this->cast<std::uintptr_t>() != address.cast<std::uintptr_t>(); }
 
-	// cast pointer and dereference.
+	// cast pointer.
 	template<typename c = game_address>
 	c cast() const { return this->base ? (c)this->base : c{ }; }
-
-	template<typename c = game_address>
-	c reinterpret() const { return this->base ? *reinterpret_cast<c*>(this->base) : c{ }; }
 
 	// add offset.
 	template<typename a = game_address>
@@ -101,6 +98,8 @@ public:
 	s sub(std::ptrdiff_t offset) const { return this->base ? (s)(this->base - offset) : s{ }; }
 
 	// dereference.
+	template<typename d = game_address>
+	d reinterpret() const { return this->base ? *reinterpret_cast<d*>(this->base) : d{ }; }
 	// verify adddress and dereference n times.
 	template<typename d = game_address>
 	d deref(std::size_t n = dereference::once)
