@@ -9,7 +9,6 @@ class game_maths
 public:
 	bool world_to_screen(const vector_3d& origin, vector_2d& screen);
 	vector_3d vector_transform(vector_3d& transform, matrix_3x4& matrix);
-	void transform_vector(vector_3d& start, matrix_3x4& matrix, vector_3d& end);
 	matrix_3x4 angle_matrix(const q_angle& angle);
 
 	void normalize_angle(float& angle);
