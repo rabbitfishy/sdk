@@ -100,6 +100,7 @@ public:
 	// dereference.
 	template<typename d = game_address>
 	d reinterpret() const { return this->base ? *reinterpret_cast<d*>(this->base) : d{ }; }
+
 	// verify adddress and dereference n times.
 	template<typename d = game_address>
 	d deref(std::size_t n = dereference::once)
