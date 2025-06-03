@@ -81,13 +81,7 @@ public:
 
 	// cast pointer and add offset.
 	template<typename c = game_address>
-	c cast() const { return this->base ? *reinterpret_cast<c*>(this->base) : c{ }; }
-
-	template<typename c = game_address>
-	c cast(std::size_t offset) const { return this->base ? (*reinterpret_cast<c*>(this->base) + offset) : c{ }; }
-
-	template<typename c = game_address>
-	c cast(std::ptrdiff_t offset) const { return this->base ? (*reinterpret_cast<c*>(this->base) + offset) : c{ }; }
+	c cast() const { return this->base ? (c)this->base : c{ }; }
 
 	// add offset.
 	template<typename a = game_address>
