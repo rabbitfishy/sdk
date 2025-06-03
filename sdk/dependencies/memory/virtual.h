@@ -79,7 +79,7 @@ public:
 	bool operator==(game_address address) const { return this->cast<std::uintptr_t>() == address.cast<std::uintptr_t>(); }
 	bool operator!=(game_address address) const { return this->cast<std::uintptr_t>() != address.cast<std::uintptr_t>(); }
 
-	// cast pointer and add offset.
+	// cast pointer.
 	template<typename c = game_address>
 	c cast() const { return this->base ? (c)this->base : c{ }; }
 
