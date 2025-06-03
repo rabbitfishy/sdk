@@ -29,13 +29,6 @@ vector_3d game_maths::vector_transform(vector_3d& transform, matrix_3x4& matrix)
         transform.dot(matrix[2]) + matrix[2][3]);
 }
 
-void game_maths::transform_vector(vector_3d& start, matrix_3x4& matrix, vector_3d& end)
-{
-    end = { start.dot(matrix[0]) + matrix[0][3],
-            start.dot(matrix[1]) + matrix[1][3],
-            start.dot(matrix[2]) + matrix[2][3] };
-}
-
 matrix_3x4 game_maths::angle_matrix(const q_angle& angle)
 {
     float cos_x = std::cos(deg_to_rad(angle.x)), sin_x = std::sin(deg_to_rad(angle.x));
