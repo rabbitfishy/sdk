@@ -175,16 +175,6 @@ public:
 		return (r)result;
 	}
 
-	// set.
-	template<typename s = std::uintptr_t>
-	void set(const s& value)
-	{
-		if (!this->base)
-			return;
-
-		*reinterpret_cast<s*>(this->base) = value;
-	}
-
 private:
 	// checks if address is not null and has correct page protection.
 	static bool valid(std::uintptr_t address)
