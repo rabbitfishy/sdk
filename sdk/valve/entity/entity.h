@@ -72,7 +72,7 @@ public:
 	bool update_dispatch_layer(game_animation_layer* layer, game_studio_hdr* hdr, int sequence) { return virtuals->call<bool>(this, 247, layer, hdr, sequence); }
 };
 
-class base_combat_weapon : public client_entity
+class base_combat_weapon : public game_client_entity
 {
 public:
 	NETVAR("CBaseCombatWeapon->m_flNextPrimaryAttack", next_primary_attack, float)
