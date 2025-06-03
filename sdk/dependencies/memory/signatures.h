@@ -5,7 +5,7 @@
 /*
 * put all your pattern sigs here cuz its easier to find and maintain.
 * example of use:
-* struct [what ever name u want] <-- this here is only to keep it maintained and less messy also easier to find and update.
+* struct [what ever name u want] <-- this here is to keep it maintained and less messy also easier to find and update.
 * {
 *	PATTERN([sig name], "sig pattern here.");
 * };
