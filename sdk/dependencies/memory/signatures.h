@@ -3,7 +3,7 @@
 #define PATTERN( name, pattern ) struct name { static const char* signature( ) { return ( const char* )( pattern ); } }
 
 /*
-* put all your pattern sigs here cuz its easier to find and maintaine
+* put all your pattern sigs here cuz its easier to find and maintain.
 * example of use:
 * struct [what ever name u want] <-- this here is only to keep it maintained and less messy also easier to find pattern(s) to update it in the future.
 * {
