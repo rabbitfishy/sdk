@@ -7,7 +7,7 @@
 * example of use:
 * struct [what ever name u want] <-- this here is only to keep it maintained and less messy also easier to find pattern(s) to update it in the future.
 * {
-*	pattern([sig name], "sig pattern here.");
+*	PATTERN([sig name], "sig pattern here.");
 * };
 */
 
