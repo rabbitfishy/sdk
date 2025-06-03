@@ -4,6 +4,7 @@
 #include "../other/bitbuf.h"
 #include "../../dependencies/memory/modules.h"
 #include "../../dependencies/memory/signatures.h"
+#include "../../dependencies/maths/maths.h"
 
 class collideable;
 class client_networkable;
