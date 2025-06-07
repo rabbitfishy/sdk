@@ -7,7 +7,8 @@ int windows_dump::create_dump(EXCEPTION_POINTERS* exception)
 	MINIDUMP_EXCEPTION_INFORMATION info;
 
 	WCHAR file_path[MAX_PATH];
-	const WCHAR* file_name = L"sdk dump";
+	DWORD buffer_size		= MAX_PATH;
+	const WCHAR* file_name	= L"sdk dump";
 	WCHAR name_path[MAX_PATH];
 
 	// get our file destination path (%temp% file).
@@ -25,9 +26,9 @@ int windows_dump::create_dump(EXCEPTION_POINTERS* exception)
 	// get handle to dump file.
 	HANDLE dump_file = CreateFileW(name_path, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ, 0, CREATE_ALWAYS, 0, 0);
 
-	info.ThreadId = GetCurrentThreadId();
-	info.ExceptionPointers = exception;
-	info.ClientPointers = TRUE;
+	info.ThreadId			= GetCurrentThreadId();
+	info.ExceptionPointers	= exception;
+	info.ClientPointers		= TRUE;
 
 	// check if we successfully created the dump file(s).
 	bool successful = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), dump_file, MiniDumpWithDataSegs, &info, NULL, NULL);
