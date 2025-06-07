@@ -4,6 +4,7 @@
 
 #pragma region memory
 
+#include "memory/convars.h"
 #include "memory/modules.h"
 #include "memory/scanner.h"
 #include "memory/signatures.h"
