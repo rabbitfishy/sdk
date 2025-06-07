@@ -2,6 +2,7 @@
 #include "../interface/interface.h"
 #include "../netvar/netvar.h"
 #include "../other/bitbuf.h"
+#include "../../dependencies/memory/convars.h"
 #include "../../dependencies/memory/modules.h"
 #include "../../dependencies/memory/signatures.h"
 #include "../../dependencies/maths/maths.h"
