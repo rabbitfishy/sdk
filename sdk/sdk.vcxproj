@@ -112,6 +112,7 @@
     <ClInclude Include="dependencies\console\console.h" />
     <ClInclude Include="dependencies\dependency.h" />
     <ClInclude Include="dependencies\maths\maths.h" />
+    <ClInclude Include="dependencies\memory\convars.h" />
     <ClInclude Include="dependencies\memory\modules.h" />
     <ClInclude Include="dependencies\memory\scanner.h" />
     <ClInclude Include="dependencies\memory\signatures.h" />
