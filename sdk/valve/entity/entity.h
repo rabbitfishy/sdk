@@ -174,8 +174,7 @@ public:
 	NETVAR("CInferno->m_nFireEffectTickBegin", effect_tick_begin, int)
 
 	float expiry_time() {
-		static game_convar* inferno_flame_lifetime = interfaces->convar->find("inferno_flame_lifetime");
-		return inferno_flame_lifetime->get_float();
+		return convars::other::inferno_flame_lifetime::convar()->get_float();
 	}
 };
 
