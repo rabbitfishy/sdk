@@ -13,8 +13,6 @@
 
 namespace convars
 {
-
-
 	struct other
 	{
 		CVAR(inferno_flame_lifetime, "inferno_flame_lifetime");
