@@ -6,13 +6,68 @@
 
 #pragma region engine trace flags
 
-enum game_displacement_surface : int
+enum game_char_texture
 {
-	displacement_surface		= (1 << 0),
-	displacement_walkable		= (1 << 1),
-	displacement_buildable		= (1 << 2),
-	displacement_surface_prop1	= (1 << 3),
-	displacement_surface_prop2	= (1 << 4)
+	char_texture_antlion		= 'A',
+	char_texture_bloody_flesh	= 'B',
+	char_texture_concrete		= 'C',
+	char_texture_dirt			= 'D',
+	char_texture_egg_shell		= 'E',
+	char_texture_flesh			= 'F',
+	char_texture_grate			= 'G',
+	char_texture_alien_flesh	= 'H',
+	char_texture_clip			= 'I',
+	char_texture_snow			= 'K',
+	char_texture_plastic		= 'L',
+	char_texture_metal			= 'M',
+	char_texture_sand			= 'N',
+	char_texture_foliage		= 'O',
+	char_texture_computer		= 'P',
+	char_texture_reflective		= 'R',
+	char_texture_slosh			= 'S',
+	char_texture_tile			= 'T',
+	char_texture_cardboard		= 'U',
+	char_texture_vent			= 'V',
+	char_texture_wood			= 'W',
+	char_texture_fake			= 'X',
+	char_texture_glass			= 'Y',
+	char_texture_warp_shield	= 'Z',
+	char_texture_sand_barrel	= '\xC'
+};
+
+enum game_damage_type : int
+{
+	damage_no			= 0,
+	damage_events_only	= 1,
+	damage_yes			= 2,
+	damage_aim			= 3
+};
+
+enum game_collision_group : int
+{
+	collision_none = 0,
+	collision_debris,					// collides with nothing but world and static stuff
+	collision_debris_trigger,			// same as debris, but hits triggers
+	collision_interactive_debris,		// collides with everything except other interactive debris or debris
+	collision_interactive,				// collides with everything except interactive debris or debris
+	collision_player,
+	collision_breakable_glass,
+	collision_vehicle,
+	collision_player_movement,			// for hl2, same as collision_group_player, for / tf2, this filters out other players and cbaseobjects
+	collision_npc,						// generic npc group
+	collision_in_vehicle,				// for any entity inside a vehicle
+	collision_weapon,					// for any weapons that need collision detection
+	collision_vehicle_clip,				// vehicle clip brush to restrict vehicle movement
+	collision_projectile,				// projectiles!
+	collision_door_blocker,				// blocks entities not permitted to get near moving doors
+	collision_passable_door,			// doors that the player shouldn't collide with
+	collision_dissolving,				// things that are dissolving are in this group
+	collision_push_away,				// nonsolid on client and server, pushaway in player code
+	collision_npc_actor,				// used so npcs in scripts ignore the player.
+	collision_npc_scripted,				// used for npcs in scripts that should not collide with each other
+	collision_pz_clip,
+	collision_debris_block_projectile,	// only collides with bullets
+	collision_last_shared
 };
 
 enum game_trace_type : int
@@ -24,95 +79,99 @@ enum game_trace_type : int
 	trace_filter_sky
 };
 
-enum collision_group : int
-{
-	collision_none = 0,
-	collision_debris,						// collides with nothing but world and static stuff
-	collision_debris_trigger,				// same as debris, but hits triggers
-	collision_interactive_debris,			// collides with everything except other interactive debris or debris
-	collision_interactive,					// collides with everything except interactive debris or debris
-	collision_player,
-	collision_breakable_glass,
-	collision_vehicle,
-	collision_player_movement,				// for HL2, same as Collision_Group_Player, for / TF2, this filters out other players and CBaseObjects
-	collision_npc,							// generic NPC group
-	collision_in_vehicle,					// for any entity inside a vehicle
-	collision_weapon,						// for any weapons that need collision detection
-	collision_vehicle_clip,					// vehicle clip brush to restrict vehicle movement
-	collision_projectile,					// projectiles!
-	collision_door_blocker,					// blocks entities not permitted to get near moving doors
-	collision_passable_door,				// doors that the player shouldn't collide with
-	collision_dissolving,					// things that are dissolving are in this group
-	collision_push_away,					// nonsolid on client and server, pushaway in player code
-	collision_npc_actor,					// used so NPCs in scripts ignore the player.
-	collision_npc_scripted,					// used for NPCs in scripts that should not collide with each other
-	collision_pz_clip,
-	collision_debris_block_projectile,		// only collides with bullets
-	collision_last_shared
-};
-
-enum game_trace_contents : unsigned int
+enum game_trace_contents : int
 {
 	contents_empty					= 0,
-	contents_solid					= 0x1,
-	contents_window					= 0x2,
-	contents_aux					= 0x4,
-	contents_grate					= 0x8,
-	contents_slime					= 0x10,
-	contents_water					= 0x20,
-	contents_blocklos				= 0x40,
-	contents_opaque					= 0x80,
-	contents_test_fog_volume		= 0x100,
-	contents_unused					= 0x200,
-	contents_block_light			= 0x400,
-	contents_team1					= 0x800,
-	contents_team2					= 0x1000,
-	contents_ignore_nodraw_opaque	= 0x2000,
-	contents_moveable				= 0x4000,
-	contents_area_portal			= 0x8000,
-	contents_player_clip			= 0x10000,
-	contents_monster_clip			= 0x20000,
-	contents_current_0				= 0x40000,
-	contents_current_90				= 0x80000,
-	contents_current_180			= 0x100000,
-	contents_current_270			= 0x200000,
-	contents_current_up				= 0x400000,
-	contents_current_down			= 0x800000,
-	contents_origin					= 0x1000000,
-	contents_monster				= 0x2000000,
-	contents_debris					= 0x4000000,
-	contents_detail					= 0x8000000,
-	contents_translucent			= 0x10000000,
-	contents_ladder					= 0x20000000,
-	contents_hitbox					= 0x40000000
+	contents_solid					= (1 << 0),
+	contents_window					= (1 << 1),
+	contents_aux					= (1 << 2),
+	contents_grate					= (1 << 3),
+	contents_slime					= (1 << 4),
+	contents_water					= (1 << 5),
+	contents_blocklos				= (1 << 6),
+	contents_opaque					= (1 << 7),
+	contents_testfogvolum			= (1 << 8),
+	contents_unused					= (1 << 9),
+	contents_block_light			= (1 << 10),
+	contents_team1					= (1 << 11),
+	contents_team2					= (1 << 12),
+	contents_ignore_nodraw_opaque	= (1 << 13),
+	contents_moveable				= (1 << 14),
+	contents_area_portal			= (1 << 15),
+	contents_player_clip			= (1 << 16),
+	contents_monster_clip			= (1 << 17),
+	contents_current_0				= (1 << 18),
+	contents_current_90				= (1 << 19),
+	contents_current_180			= (1 << 20),
+	contents_current_270			= (1 << 21),
+	contents_current_up				= (1 << 22),
+	contents_current_down			= (1 << 23),
+	contents_origin					= (1 << 24),
+	contents_monster				= (1 << 25),
+	contents_debris					= (1 << 26),
+	contents_detail					= (1 << 27),
+	contents_translucent			= (1 << 29),
+	contents_ladder					= (1 << 29),
+	contents_hitbox					= (1 << 30),
+	contents_last_visible			= contents_opaque,
+	contents_all_visible			= (contents_last_visible | (contents_last_visible - 1))
 };
 
-enum game_trace_masks : unsigned int
+enum game_trace_masks : int
 {
-	mask_all					= 0xffffffff,
-	mask_solid					= contents_solid | contents_moveable | contents_window | contents_monster | contents_grate,
-	mask_player_solid			= contents_solid | contents_moveable | contents_player_clip | contents_window | contents_monster | contents_grate,
-	mask_npc_solid				= contents_solid | contents_moveable | contents_monster_clip | contents_window | contents_monster | contents_grate,
-	mask_npc_fluid				= contents_solid | contents_moveable | contents_monster_clip | contents_window | contents_monster | contents_grate,
-	mask_water					= contents_water | contents_moveable | contents_slime,
-	mask_opaque					= contents_solid | contents_moveable | contents_opaque,
-	mask_opaque_and_npcs		= mask_opaque | contents_monster,
-	mask_blocklos				= contents_solid | contents_moveable | contents_blocklos,
-	mask_blocklos_and_npcs		= mask_blocklos | contents_monster,
-	mask_visible				= mask_opaque | contents_ignore_nodraw_opaque,
-	mask_visible_and_npcs		= mask_opaque_and_npcs | contents_ignore_nodraw_opaque,
-	mask_shot					= contents_solid | contents_moveable | contents_monster | contents_window | contents_debris | contents_grate | contents_hitbox,
-	mask_shot_brush_only		= contents_solid | contents_moveable | contents_window | contents_debris,
-	mask_shot_hull				= contents_solid | contents_moveable | contents_monster | contents_window | contents_debris | contents_grate,
-	mask_shot_portal			= contents_solid | contents_moveable | contents_window | contents_monster,
-	mask_solid_brushonly		= contents_solid | contents_moveable | contents_window | contents_grate,
-	mask_playersolid_brush_only = contents_solid | contents_moveable | contents_window | contents_player_clip | contents_grate,
-	mask_npc_solid_brush_only	= contents_solid | contents_moveable | contents_window | contents_monster_clip | contents_grate,
-	mask_npc_world_static		= contents_solid | contents_window | contents_monster_clip | contents_grate,
-	mask_npc_world_static_fluid	= contents_solid | contents_window | contents_monster_clip,
-	mask_split_area_portal		= contents_water | contents_slime,
-	mask_current				= contents_current_0 | contents_current_90 | contents_current_180 | contents_current_270 | contents_current_up | contents_current_down,
-	mask_dead_solid				= contents_solid | contents_player_clip | contents_window | contents_grate
+	mask_solid						= (contents_solid | contents_moveable | contents_window | contents_monster | contents_grate),
+	mask_player_solid				= (contents_solid | contents_moveable | contents_player_clip | contents_window | contents_monster | contents_grate),
+	mask_npc_solid					= (contents_solid | contents_moveable | contents_monster_clip | contents_window | contents_monster | contents_grate),
+	mask_npc_fluid					= (contents_solid | contents_moveable | contents_monster_clip | contents_window | contents_monster),
+	mask_water						= (contents_water | contents_moveable | contents_slime),
+	mask_opaque						= (contents_solid | contents_moveable | contents_opaque),
+	mask_opaque_and_npcs			= (mask_opaque | contents_monster),
+	mask_blocklos					= (contents_solid | contents_moveable | contents_blocklos),
+	mask_blocklos_and_npcs			= (mask_blocklos | contents_monster),
+	mask_visible					= (mask_opaque | contents_ignore_nodraw_opaque),
+	mask_visible_and_npcs			= (mask_opaque_and_npcs | contents_ignore_nodraw_opaque),
+	mask_shot						= (contents_solid | contents_moveable | contents_monster | contents_window | contents_debris | contents_hitbox),
+	mask_shot_brush_only			= (contents_solid | contents_moveable | contents_window | contents_debris),
+	mask_shot_hull					= (contents_solid | contents_moveable | contents_monster | contents_window | contents_debris | contents_grate),
+	mask_shot_portal				= (contents_solid | contents_moveable | contents_window | contents_monster),
+	mask_solid_brush_only			= (contents_solid | contents_moveable | contents_window | contents_grate),
+	mask_player_solid_brush_only	= (contents_solid | contents_moveable | contents_window | contents_player_clip | contents_grate),
+	mask_npc_solid_brush_only		= (contents_solid | contents_moveable | contents_window | contents_monster_clip | contents_grate),
+	mask_npc_world_static			= (contents_solid | contents_window | contents_monster_clip | contents_grate),
+	mask_npc_world_static_fluid		= (contents_solid | contents_window | contents_monster_clip),
+	mask_split_area_portal			= (contents_water | contents_slime),
+	mask_current					= (contents_current_0 | contents_current_90 | contents_current_180 | contents_current_270 | contents_current_up | contents_current_down),
+	mask_dead_solid					= (contents_solid | contents_player_clip | contents_window | contents_grate),
+	mask_all						= (contents_solid | contents_window | contents_aux | contents_grate | contents_slime | contents_water | contents_blocklos | contents_opaque | contents_testfogvolum | contents_unused | contents_block_light | contents_team1 | contents_team2 | contents_ignore_nodraw_opaque | contents_moveable | contents_area_portal | contents_player_clip | contents_monster_clip | contents_current_0 | contents_current_90 | contents_current_180 | contents_current_270 | contents_current_up | contents_current_down | contents_origin | contents_monster | contents_debris | contents_detail | contents_translucent | contents_ladder | contents_hitbox)
+};
+
+enum game_surface_flags : int
+{
+	surf_light		= (1 << 0),
+	surf_sky2d		= (1 << 1),
+	surf_sky		= (1 << 2),
+	surf_warp		= (1 << 3),
+	surf_trans		= (1 << 4),
+	surf_no_portal	= (1 << 5),
+	surf_trigger	= (1 << 6),
+	surf_no_draw	= (1 << 7),
+	surf_hint		= (1 << 8),
+	surf_skip		= (1 << 9),
+	surf_no_light	= (1 << 10),
+	surf_bump_light = (1 << 11),
+	surf_no_shadows = (1 << 12),
+	surf_no_decals	= (1 << 13),
+	surf_no_chop	= (1 << 14),
+	surf_hitbox		= (1 << 15)
+};
+
+enum game_displacement_surface : int
+{
+	displacement_surface		= (1 << 0),
+	displacement_walkable		= (1 << 1),
+	displacement_buildable		= (1 << 2),
+	displacement_surface_prop1	= (1 << 3),
+	displacement_surface_prop2	= (1 << 4)
 };
 
 #pragma endregion
@@ -126,18 +185,17 @@ struct game_brush_side_info
 
 struct game_cplane
 {
-	vector_3d	normal;
-	float		distance;
-	std::byte	type;
-	std::byte	sign_bits;
-	std::byte	_pad0[0x2];
+	vector_3d		normal;		// 0x00
+	float			distance;	// 0x0c
+	std::uint8_t	type;		// 0x10
+	std::uint8_t	sign_bits;	// 0x11
 };
 
 struct game_csurface
 {
-	const char*		name;
-	short			surface_props;
-	std::uint16_t	flags;
+	const char*		name;			// 0x00
+	short			surface_props;	// 0x04
+	std::uint16_t	flags;			// 0x06
 };
 
 class game_base_trace
@@ -288,7 +346,7 @@ public:
 
 class game_trace_filter : public trace_filter
 {
-	using should_hit_callback = bool(__cdecl*)(handle_entity* entity, int contents_mask);
+	using should_hit_callback = bool(__cdecl*)(handle_entity*, int);
 
 public:
 	game_trace_filter(const handle_entity* entity, int collision_group = collision_none, should_hit_callback should_hit = nullptr)
@@ -297,19 +355,17 @@ public:
 
 	bool should_hit_entity(handle_entity* entity, int contents_mask) override
 	{
-		using should_hit_entity_details = bool(__thiscall*)(game_trace_filter*, const handle_entity*, int);
-		static auto original_constructor = SEARCH(modules->client, signatures::interfaces::should_hit_entity::signature()).cast<should_hit_entity_details>();
-		return original_constructor(this, entity, contents_mask);
+		return entity != this->skip;
 	}
 
 	inline const handle_entity* skip_entity() const
 	{
-		return skip;
+		return this->skip;
 	}
 
 	inline int collision_group() const
 	{
-		return collision;
+		return this->collision;
 	}
 
 private:
@@ -321,15 +377,13 @@ private:
 class trace_filter_skip_two_entities : public game_trace_filter
 {
 public:
-	trace_filter_skip_two_entities(const handle_entity* first = nullptr, const handle_entity* second = nullptr, int collision_group = collision_none)
+	trace_filter_skip_two_entities(const handle_entity* first, const handle_entity* second, int collision_group = collision_none)
 		: game_trace_filter(first, collision_group), skip2(second) {
 	}
 
 	bool should_hit_entity(handle_entity* entity, int contents_mask) override
 	{
-		using should_hit_entity2_details = bool(__thiscall*)(trace_filter_skip_two_entities*, const handle_entity*, int);
-		static auto original_constructor = SEARCH(modules->client, signatures::interfaces::should_hit_entity2::signature()).cast<should_hit_entity2_details>();
-		return original_constructor(this, entity, contents_mask);
+		return entity != this->skip2;
 	}
 
 private:
