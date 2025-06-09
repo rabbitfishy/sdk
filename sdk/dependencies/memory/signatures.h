@@ -18,8 +18,6 @@ namespace signatures
 		PATTERN(client_state, "A1 ? ? ? ? 8B 88 ? ? ? ? 85 C9 75 07");
 		PATTERN(weapon_system, "8B 35 ? ? ? ? FF 10 0F B7 C0");
 		PATTERN(input, "B9 ? ? ? ? F3 0F 11 04 24 FF 50 10");
-		PATTERN(should_hit_entity, "55 8B EC 8B 55 0C 56 8B 75 08 57");
-		PATTERN(should_hit_entity2, "55 8B EC 53 8B D9 56 57 8B 7D 08 8B 73 10");
 	};
 
 	struct hooks
