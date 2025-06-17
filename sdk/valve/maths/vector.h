@@ -221,6 +221,28 @@ public:
 	[[nodiscard]] constexpr float length_2d_sqr() const { return (this->x * this->x + this->y * this->y); }
 	[[nodiscard]] float length_2d() const { return std::sqrtf(this->length_2d_sqr()); }
 
+	[[nodiscard]] constexpr float distance_sqr(const vector_3d& v) const
+	{
+		vector_3d delta;
+
+		delta.x = this->x - v.x;
+		delta.y = this->y - v.y;
+		delta.z = this->z - v.z;
+
+		return delta.length_sqr();
+	}
+
+	[[nodiscard]] float distance(const vector_3d& v) const
+	{
+		vector_3d delta;
+
+		delta.x = this->x - v.x;
+		delta.y = this->y - v.y;
+		delta.z = this->z - v.z;
+
+		return delta.length();
+	}
+
 	[[nodiscard]] constexpr float dot(const vector_3d& v) const { return (this->x * v.x + this->y * v.y + this->z * v.z); }
 	[[nodiscard]] constexpr vector_3d cross(const vector_3d& v) const { return { this->y * v.z - this->z * v.y, this->z * v.x - this->x * v.z, this->x * v.y - this->y * v.x }; }
 
