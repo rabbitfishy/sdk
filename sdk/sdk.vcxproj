@@ -135,6 +135,7 @@
     <ClInclude Include="hooks\hooks.h" />
     <ClInclude Include="include.h" />
     <ClInclude Include="valve\classes\clients.h" />
+    <ClInclude Include="valve\classes\other.h" />
     <ClInclude Include="valve\classes\user_cmd.h" />
     <ClInclude Include="valve\interface\classes\base_interface.h" />
     <ClInclude Include="valve\interface\classes\client_mode.h" />
