@@ -6,6 +6,7 @@
 #include "../../dependencies/memory/modules.h"
 #include "../../dependencies/memory/signatures.h"
 #include "../../dependencies/maths/maths.h"
+#include "other.h"
 
 class collideable;
 class client_networkable;
