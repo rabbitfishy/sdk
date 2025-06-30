@@ -296,5 +296,8 @@
     <ClInclude Include="dependencies\memory\convars.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="valve\classes\other.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
