@@ -1,4 +1,5 @@
 #pragma once
+#include "../interface/interface.h"
 #include "../interface/classes/global_vars.h"
 
 #define tick_interval	( interfaces->global_vars->interval_per_tick )
@@ -135,3 +136,4 @@ enum game_observer_mode : int
 	obs_mode_roaming
 
 };
+
