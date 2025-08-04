@@ -13,8 +13,9 @@ public:
 
 	void normalize_angle(float& angle);
 	void angle_vectors(const q_angle& angles, vector_3d* forward, vector_3d* right = nullptr, vector_3d* up = nullptr);
-	void vector_angles(const vector_3d& forward, q_angle& angles);
+	q_angle vector_angles(const vector_3d& relative);
 	q_angle calculate_angle(const vector_3d& start, const vector_3d& end);
 };
 
 extern game_maths* maths;
+
