@@ -130,4 +130,3 @@ q_angle game_maths::calculate_angle(const vector_3d& start, const vector_3d& end
     vector_3d relative = end - start;
     return this->vector_angles(relative);
 }
-
