@@ -90,33 +90,43 @@ void game_maths::angle_vectors(const q_angle& angles, vector_3d* forward, vector
     }
 }
 
-void game_maths::vector_angles(const vector_3d& forward, q_angle& angles)
+// this the 'corrected' calculation for vector to angles conversion.
+// credit: https://www.unknowncheats.me/forum/1147000-post18.html
+q_angle game_maths::vector_angles(const vector_3d& relative)
 {
-    float   pitch   = { }, 
-            yaw     = { };
+    q_angle angle;
+    float   pitch, yaw;
 
-    if (forward.x == 0.f && forward.y == 0.f)
+    if (relative.x == 0.f && relative.y == 0.f)
     {
-        pitch = (forward.z > 0.f) ? 270.f : 90.f;
+        pitch = (relative.z > 0.f) ? 270.f : 90.f;
         yaw = 0.f;
     }
     else
     {
-        pitch = rad_to_deg(std::atan2f(-forward.z, forward.length_2d()));
-        yaw = rad_to_deg(std::atan2f(forward.y, forward.x));
+        // the hypotenuse is the magnitude of a vector.
+        float magnitude = relative.length();
 
-        normalize_angle(pitch);
-        normalize_angle(yaw);
+        // now remember pitch is the Y of our vector, and yaw is the X of our vector.
+        // we have an X and Y, so we can use arctan, or inverse tangent, to find the yaw.
+        yaw = rad_to_deg(std::atan2(relative.y, relative.x));
+        this->normalize_angle(yaw);
+
+        // we have Z and the hypotenuse, so we can use arcsin, or inverse sine, to find the pitch.
+        pitch = rad_to_deg(std::asin(relative.z / magnitude)) * -1;
+        this->normalize_angle(pitch);
     }
 
-    angles = { pitch, yaw, 0.f };
+    // now you can just add this resulting angle to the current viewangles.
+    angle.x = pitch, angle.y = yaw;
+    return angle;
 }
 
+// this calculation is wrong but still helpful resource.
 // credit: https://www.unknowncheats.me/forum/1146758-post1.html
 q_angle game_maths::calculate_angle(const vector_3d& start, const vector_3d& end)
 {
-    q_angle angle = { };
-    vector_3d delta = (end - start);
-    vector_angles(delta, angle);
-    return angle;
+    // subtract our enemies position from our origin position to get the relative angle.
+    vector_3d relative = end - start;
+    return this->vector_angles(relative);
 }
