@@ -113,7 +113,7 @@ q_angle game_maths::vector_angles(const vector_3d& relative)
         this->normalize_angle(yaw);
 
         // we have Z and the hypotenuse, so we can use arcsin, or inverse sine, to find the pitch.
-        pitch = rad_to_deg(std::asin(relative.z / magnitude)) * -1;
+        pitch = rad_to_deg(std::asin(relative.z / magnitude)) * -1.f;
         this->normalize_angle(pitch);
     }
 
@@ -130,3 +130,4 @@ q_angle game_maths::calculate_angle(const vector_3d& start, const vector_3d& end
     vector_3d relative = end - start;
     return this->vector_angles(relative);
 }
+
