@@ -5,10 +5,10 @@
 #include <bit>
 
 // degrees to radians.
-#define deg_to_rad( value ) ( ( value ) * ( ( const float )M_PI / 180.f ) )
+#define deg_to_rad( value ) ( ( value ) * ( const float )M_PI / 180.f )
 
 // radians to degrees.
-#define rad_to_deg( value ) ( ( value ) * ( 180.f / ( const float )M_PI ) )
+#define rad_to_deg( value ) ( ( value ) * 180.f / ( const float )M_PI )
 
 using matrix_3x3 = float[3][3];
 
@@ -277,4 +277,5 @@ public:
 	}
 
 	float data[4][4];
+
 };
