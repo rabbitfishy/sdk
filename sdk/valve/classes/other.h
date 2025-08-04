@@ -1,11 +1,9 @@
 #pragma once
-#include "../interface/interface.h"
-#include "../interface/classes/global_vars.h"
 
-#define tick_interval	( interfaces->global_vars->interval_per_tick )
-#define time_to_ticks	( value )  ( static_cast<int>( 0.5f + static_cast<float>( value ) / tick_interval ) )
-#define ticks_to_time	( value )  ( tick_interval * static_cast<float>( value ) )
-#define round_to_ticks	( value )  ( tick_interval * time_to_ticks( value ) )
+#define tick_interval			interfaces->global_vars->interval_per_tick
+#define time_to_ticks( value )  ( static_cast<int>( 0.5f + static_cast<float>( value ) / tick_interval ) )
+#define ticks_to_time( value )  ( tick_interval * static_cast<float>( value ) )
+#define round_to_ticks( value ) ( tick_interval * time_to_ticks( value ) )
 
 enum game_flags : int
 {
@@ -136,4 +134,5 @@ enum game_observer_mode : int
 	obs_mode_roaming
 
 };
+
 
