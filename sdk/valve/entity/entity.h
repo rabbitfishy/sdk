@@ -56,6 +56,18 @@ public:
 		return hdr;
 	}
 
+	void update_client_side_animation()
+	{
+		virtuals->call<void>(this, 224);
+	}
+
+	void invalidate_bone_cache()
+	{
+		static unsigned long& model_bone_counter = *SEARCH(modules->client, signatures::entity::model_bone_counter::signature()).add(0x2).reinterpret<unsigned long*>();
+		this->most_recent_bone_counter() = model_bone_counter - 1;
+		this->last_bone_setup_time() = -FLT_MAX;
+	}
+
 	int bone_by_hash(const hash32 bone_hash);
 	vector_3d bone_position(int bone_index);
 	vector_3d hitbox_position(int hitbox_index);
@@ -195,3 +207,4 @@ public:
 	float bomb_timer(const float server_time) { return std::clamp(this->blow_time() - server_time, 0.f, this->bomb_timer_length()); }
 	float defuse_timer(const float server_time) { return std::clamp(this->defuse_countdown() - server_time, 0.f, this->defuse_length()); }
 };
+
