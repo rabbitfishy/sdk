@@ -99,7 +99,7 @@ public:
 
 	// dereference.
 	template<typename d = game_address>
-	d reinterpret() const { return this->base ? *reinterpret_cast<d*>(this->base) : d{ }; }
+	d reinterpret() const { return this->base ? reinterpret_cast<d>(this->base) : d{ }; }
 
 	// verify adddress and dereference n times.
 	template<typename d = game_address>
@@ -201,3 +201,4 @@ private:
 
 #define SEARCH( modules, signatures ) game_address{ scanner->scan( modules, signatures ) }
 #define ADDRESS( pointer ) game_address{ pointer }
+
