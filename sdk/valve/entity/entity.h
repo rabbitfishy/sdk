@@ -39,6 +39,7 @@ public:
 
 	NETVAR("CBaseAnimating->m_bClientSideAnimation", client_side_animation, bool)
 
+	NETVAR_OFFSET("CBaseAnimating->m_nForceBone", 0x4, most_recent_model_counter, unsigned long)
 	NETVAR_OFFSET("CBaseAnimating->m_nForceBone", 0x3C, bone_attachments, utl_vector<base_handle>)
 	NETVAR_OFFSET("CBaseAnimating->m_nForceBone", 0x18, bone_accessor, game_bone_accessor)
 
@@ -194,3 +195,4 @@ public:
 	float bomb_timer(const float server_time) { return std::clamp(this->blow_time() - server_time, 0.f, this->bomb_timer_length()); }
 	float defuse_timer(const float server_time) { return std::clamp(this->defuse_countdown() - server_time, 0.f, this->defuse_length()); }
 };
+
