@@ -218,9 +218,6 @@ public:
 	[[nodiscard]] constexpr float length_sqr() const { return this->dot(*this); }
 	[[nodiscard]] float length() const { return std::sqrtf(this->length_sqr()); }
 
-	[[nodiscard]] constexpr float length_2d_sqr() const { return (this->x * this->x + this->y * this->y); }
-	[[nodiscard]] float length_2d() const { return std::sqrtf(this->length_2d_sqr()); }
-
 	[[nodiscard]] constexpr float distance_sqr(const vector_3d& v) const
 	{
 		vector_3d delta;
