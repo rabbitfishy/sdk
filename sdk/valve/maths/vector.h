@@ -92,7 +92,8 @@ public:
 	// extentions.
 	[[nodiscard]] bool zero() const { return (this->x == 0.f && this->y == 0.f); }
 
-	[[nodiscard]] constexpr float length_sqr() const { return (this->x * this->x + this->y * this->y); }
+	[[nodiscard]] constexpr float dot(const vector_2d& v) const { return (this->x * v.x + this->y * v.y); }
+	[[nodiscard]] constexpr float length_sqr() const { return this->dot(*this); }
 	[[nodiscard]] float length() const { return std::sqrtf(this->length_sqr()); }
 
 	float x, y;
