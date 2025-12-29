@@ -131,9 +131,6 @@ public:
 	[[nodiscard]] constexpr float length_sqr() const { return this->dot(*this); }
 	[[nodiscard]] float length() const { return std::sqrtf(this->length_sqr()); }
 
-	[[nodiscard]] constexpr float length_2d_sqr() const { return (this->x * this->x + this->y * this->y); }
-	[[nodiscard]] float length_2d() const { return std::sqrtf(this->length_2d_sqr()); }
-
 	[[nodiscard]] constexpr float dot(const q_angle& q) const { return (this->x * q.x + this->y * q.y + this->z * q.z); }
 
 	float x, y, z;
