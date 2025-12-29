@@ -121,7 +121,8 @@ public:
 	q_angle sanitize() const
 	{
 		q_angle cleaned = *this;
-		cleaned.clamped().normalized();
+		cleaned.clamp();
+		cleaned.normalize();
 		return cleaned;
 	}
 
@@ -135,3 +136,4 @@ public:
 
 	float x, y, z;
 };
+
