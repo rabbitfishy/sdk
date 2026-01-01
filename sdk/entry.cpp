@@ -29,7 +29,7 @@ DWORD WINAPI setup(HMODULE instance)
     }
 
     // unload hack cuz convenient!
-    while (!GetAsyncKeyState(VK_END))
+    while (!GetAsyncKeyState(VK_DELETE))
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     FreeLibraryAndExitThread(instance, EXIT_SUCCESS);
@@ -69,4 +69,5 @@ BOOL APIENTRY DLL_ENTRY(HMODULE instance, DWORD call_reason, LPVOID reserved)
     }
 
     return TRUE;
+
 }
