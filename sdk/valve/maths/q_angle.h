@@ -129,11 +129,9 @@ public:
 	// extentions.
 	[[nodiscard]] bool zero() const { return (this->x == 0.f && this->y == 0.f && this->z == 0.f); }
 
+	[[nodiscard]] constexpr float dot(const q_angle& q) const { return (this->x * q.x + this->y * q.y + this->z * q.z); }
 	[[nodiscard]] constexpr float length_sqr() const { return this->dot(*this); }
 	[[nodiscard]] float length() const { return std::sqrtf(this->length_sqr()); }
 
-	[[nodiscard]] constexpr float dot(const q_angle& q) const { return (this->x * q.x + this->y * q.y + this->z * q.z); }
-
 	float x, y, z;
 };
-
