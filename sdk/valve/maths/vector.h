@@ -216,6 +216,7 @@ public:
 	// extentions.
 	[[nodiscard]] bool zero() const { return (this->x == 0.f && this->y == 0.f && this->z == 0.f); }
 
+	[[nodiscard]] constexpr float dot(const vector_3d& v) const { return (this->x * v.x + this->y * v.y + this->z * v.z); }
 	[[nodiscard]] constexpr float length_sqr() const { return this->dot(*this); }
 	[[nodiscard]] float length() const { return std::sqrtf(this->length_sqr()); }
 
@@ -241,8 +242,10 @@ public:
 		return delta.length();
 	}
 
-	[[nodiscard]] constexpr float dot(const vector_3d& v) const { return (this->x * v.x + this->y * v.y + this->z * v.z); }
-	[[nodiscard]] constexpr vector_3d cross(const vector_3d& v) const { return { this->y * v.z - this->z * v.y, this->z * v.x - this->x * v.z, this->x * v.y - this->y * v.x }; }
+	[[nodiscard]] constexpr vector_3d cross(const vector_3d& v) const { return vector_3d(this->y * v.z - this->z * v.y, this->z * v.x - this->x * v.z, this->x * v.y - this->y * v.x); }
+
+	// convert a 3 dimensional vector to 2 dimensional.
+	[[nodiscard]] constexpr vector_2d to_2d() const { return vector_2d(this->x, this->y); }
 
 	float x, y, z;
 };
@@ -278,9 +281,9 @@ public:
 	vertex() : position{ }, coordinate{ }, colour{ } { }
 	vertex(const vector_2d& position, const vector_2d& coordinate, const DWORD colour)
 	{
-		this->position = position;
-		this->coordinate = coordinate;
-		this->colour = colour;
+		this->position		= position;
+		this->coordinate	= coordinate;
+		this->colour		= colour;
 	}
 
 	vector_2d	position;
