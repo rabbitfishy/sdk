@@ -110,7 +110,7 @@ public:
 		const vector_3d left = this->get_left();
 		const float up_z = this->data[2][2];
 
-		const float length_2d = forward.length_2d();
+		const float length_2d = forward.to_2d().length();
 		const float pitch = rad_to_deg(std::atan2f(-forward.z, length_2d));
 
 		// check is enough here to get angles.
