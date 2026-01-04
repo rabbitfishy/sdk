@@ -34,6 +34,8 @@ namespace signatures
 		PATTERN(model_bone_counter, "3B 05 ? ? ? ? 0F 84 ? ? ? ? 8B 47");
 		PATTERN(physics_run_think, "55 8B EC 83 EC 10 53 56 57 8B F9 8B 87");
 		PATTERN(get_last_command, "8D 8E ? ? ? ? 89 5C 24 3C");
+		PATTERN(post_think_vphysics, "55 8B EC 83 E4 F8 81 EC ? ? ? ? 53 8B D9 56 57 83 BB");
+		PATTERN(simulate_player_simulated_entities, "56 8B F1 57 8B BE ? ? ? ? 83 EF 01 78 74");
 	};
 
 	struct other
@@ -51,3 +53,4 @@ namespace signatures
 		PATTERN(animation_state_reset, "56 6A 01 68 ? ? ? ? 8B F1");
 	};
 }
+
