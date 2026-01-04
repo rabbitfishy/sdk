@@ -42,7 +42,7 @@ public:
 	}
 
 private:
-	void* base;
+	void*			base;
 	std::size_t		length;
 	DWORD			old_flags;
 };
@@ -201,3 +201,4 @@ private:
 
 #define ADDRESS( pointer ) game_address( pointer )
 #define SEARCH( modules, signatures ) ADDRESS( scanner->scan( modules, signatures ) )
+
