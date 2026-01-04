@@ -32,6 +32,7 @@ namespace signatures
 		PATTERN(set_abs_angle, "55 8B EC 83 E4 F8 83 EC 64 53 56 57 8B F1 E8");
 		PATTERN(animation_overlays, "8B 89 ? ? ? ? 8D 0C D1");
 		PATTERN(model_bone_counter, "3B 05 ? ? ? ? 0F 84 ? ? ? ? 8B 47");
+		PATTERN(physics_run_think, "55 8B EC 83 EC 10 53 56 57 8B F9 8B 87");
 		PATTERN(get_last_command, "8D 8E ? ? ? ? 89 5C 24 3C");
 	};
 
