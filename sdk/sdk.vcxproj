@@ -21,13 +21,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -157,6 +157,7 @@
     <ClInclude Include="valve\interface\classes\key_value_system.h" />
     <ClInclude Include="valve\interface\classes\localize.h" />
     <ClInclude Include="valve\interface\classes\material_system.h" />
+    <ClInclude Include="valve\interface\classes\mdl_cache.h" />
     <ClInclude Include="valve\interface\classes\model_info.h" />
     <ClInclude Include="valve\interface\classes\network.h" />
     <ClInclude Include="valve\interface\classes\panel.h" />
