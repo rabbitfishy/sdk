@@ -42,7 +42,7 @@ public:
 	}
 
 private:
-	void*			base;
+	void* base;
 	std::size_t		length;
 	DWORD			old_flags;
 };
@@ -63,25 +63,25 @@ enum dereference : std::size_t
 class game_address
 {
 public:
-	explicit game_address() : base{ } { }
-	~game_address() { }
+	explicit game_address() : base{ } {}
+	~game_address() {}
 
 	// pass by offset and pointer.
-	explicit game_address(std::uintptr_t address) : base{ address } { }
-	explicit game_address(const void* address) : base{ reinterpret_cast<std::uintptr_t>(address) } { }
+	explicit game_address(std::uintptr_t address) : base{ address } {}
+	explicit game_address(const void* address) : base{ reinterpret_cast<std::uintptr_t>(address) } {}
 
 	// arithmetic operators for native types.
 	operator std::uintptr_t() { return this->base; }
 	operator void* () { return reinterpret_cast<void*>(this->base); }
 	operator const void* () { return reinterpret_cast<const void*>(this->base); }
 
-	// is-equals-operator.
-	bool operator==(game_address address) const { return this->cast<std::uintptr_t>() == address.cast<std::uintptr_t>(); }
-	bool operator!=(game_address address) const { return this->cast<std::uintptr_t>() != address.cast<std::uintptr_t>(); }
-
 	// cast pointer.
 	template<typename c = game_address>
 	c cast() const { return this->base ? (c)this->base : c{ }; }
+
+	// is-equals-operator.
+	bool operator==(game_address address) const { return this->cast<std::uintptr_t>() == address.cast<std::uintptr_t>(); }
+	bool operator!=(game_address address) const { return this->cast<std::uintptr_t>() != address.cast<std::uintptr_t>(); }
 
 	// add offset.
 	template<typename a = game_address>
@@ -118,7 +118,7 @@ public:
 			if (!this->valid(result))
 				return d{ };
 
-			result = *reinterpret_cast<std::uintptr_t*>(result);
+			result = *this->reinterpret<std::uintptr_t*>(result);
 		}
 
 		return (d)result;
@@ -137,7 +137,7 @@ public:
 		result = this->base + offset;
 
 		// get relative offset.
-		relative = *reinterpret_cast<std::uint8_t*>(result);
+		relative = *this->reinterpret<std::uint8_t*>(result);
 		if (!relative)
 			return r{ };
 
@@ -165,7 +165,7 @@ public:
 		result = this->base + offset;
 
 		// get relative offset.
-		relative = *reinterpret_cast<std::uint32_t*>(result);
+		relative = *this->reinterpret<std::uint32_t*>(result);
 		if (!relative)
 			return r{ };
 
