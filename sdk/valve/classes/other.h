@@ -135,4 +135,9 @@ enum game_observer_mode : int
 
 };
 
-
+enum game_think_method : int
+{
+	think_fire_all_functions = 0,
+	think_fire_base_only,
+	think_fire_all_but_base,
+};
