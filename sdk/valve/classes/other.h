@@ -132,7 +132,6 @@ enum game_observer_mode : int
 	obs_mode_in_eye,
 	obs_mode_chase,
 	obs_mode_roaming
-
 };
 
 enum game_think_method : int
