@@ -299,5 +299,8 @@
     <ClInclude Include="valve\classes\other.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="valve\interface\classes\mdl_cache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
