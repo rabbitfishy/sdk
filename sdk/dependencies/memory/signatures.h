@@ -50,5 +50,3 @@ namespace signatures
 		PATTERN(animation_state_reset, "56 6A 01 68 ? ? ? ? 8B F1");
 	};
 }
-
-
