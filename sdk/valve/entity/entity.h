@@ -61,6 +61,16 @@ public:
 		virtuals->call<void>(this, 224);
 	}
 
+	void set_sequence(int handle)
+	{
+		virtuals->call<void>(this, 219, handle);
+	}
+
+	void studio_frame_advance()
+	{
+		virtuals->call<void>(this, 220);
+	}
+
 	void invalidate_bone_cache()
 	{
 		static unsigned long& model_bone_counter = *SEARCH(modules->client, signatures::entity::model_bone_counter::signature()).add(0x2).reinterpret<unsigned long*>();
@@ -207,4 +217,5 @@ public:
 	float bomb_timer(const float server_time) { return std::clamp(this->blow_time() - server_time, 0.f, this->bomb_timer_length()); }
 	float defuse_timer(const float server_time) { return std::clamp(this->defuse_countdown() - server_time, 0.f, this->defuse_length()); }
 };
+
 
