@@ -199,6 +199,5 @@ private:
 	std::uintptr_t base;
 };
 
-#define SEARCH( modules, signatures ) game_address{ scanner->scan( modules, signatures ) }
-#define ADDRESS( pointer ) game_address{ pointer }
-
+#define ADDRESS( pointer ) game_address( pointer )
+#define SEARCH( modules, signatures ) ADDRESS( scanner->scan( modules, signatures ) )
