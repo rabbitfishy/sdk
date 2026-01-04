@@ -54,6 +54,9 @@ void game_interface::setup()
 	const interface_register* material_system_register = this->register_list(modules->material_system);
 	material_system			= create<game_material_system>(material_system_register, "VMaterialSystem");
 
+	const interface_register* data_cache_register = this->register_list(modules->data_cache);
+	mdl_cache				= create<game_mdl_cache>(data_cache_register, "MDLCache");
+	
 	const interface_register* studio_render_register = this->register_list(modules->studio_render);
 	studio_render			= create<game_studio_render>(studio_render_register, "VStudioRender");
 
