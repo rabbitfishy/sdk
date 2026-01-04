@@ -105,8 +105,8 @@ public:
 
 	NETVAR("CBaseCombatWeapon->m_iClip1", ammo, int)
 
-	[[nodiscard]] float spread() { return virtuals->call<float>(this, 453); }
-	[[nodiscard]] float inaccuracy() { return virtuals->call<float>(this, 483); }
+	[[nodiscard]] float spread()		{ return virtuals->call<float>(this, 453); }
+	[[nodiscard]] float inaccuracy()	{ return virtuals->call<float>(this, 483); }
 
 	game_weapon_info* weapon_data();
 };
@@ -217,5 +217,6 @@ public:
 	float bomb_timer(const float server_time) { return std::clamp(this->blow_time() - server_time, 0.f, this->bomb_timer_length()); }
 	float defuse_timer(const float server_time) { return std::clamp(this->defuse_countdown() - server_time, 0.f, this->defuse_length()); }
 };
+
 
 
