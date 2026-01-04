@@ -100,3 +100,29 @@ vector_3d cs_player::shoot_position()
 
 	return position;
 }
+
+void base_player::post_think()
+{
+	static auto post_think_vphysics_original				= SEARCH(modules->client, signatures::entity::post_think_vphysics::signature()).reinterpret<bool(__thiscall*)(base_entity*)>();
+	static auto simulate_player_simulated_entities_original = SEARCH(modules->client, signatures::entity::simulate_player_simulated_entities::signature()).reinterpret<void(__thiscall*)(base_entity*)>();
+
+	interfaces->mdl_cache->begin_lock();
+	{
+		if (this->alive() || static_cast<cs_player*>(this)->ghost())
+		{
+			this->update_collision_bounds();
+
+			if (this->flags() & fl_on_ground)
+				this->local_data()->fall_velocity() = 0.f;
+
+			if (this->sequence() == -1)
+				this->set_sequence(0);
+
+			this->studio_frame_advance();
+			post_think_vphysics_original(this);
+		}
+
+		simulate_player_simulated_entities_original(this);
+	}
+	interfaces->mdl_cache->end_lock();
+}
