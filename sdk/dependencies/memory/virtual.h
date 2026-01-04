@@ -47,7 +47,7 @@ private:
 	DWORD			old_flags;
 };
 
-#define PROTECT( address, length, flags ) game_protect{ address, length, flags }
+#define PROTECT( address, length, flags ) game_protect( address, length, flags )
 
 // thanks danielkrupinski, Bartis1313 & opaiidev! <3
 // credit: https://github.com/opaiidev/airflow-legacy/blob/main/Airflow/base/tools/address.h
