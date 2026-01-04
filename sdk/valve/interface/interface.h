@@ -53,6 +53,7 @@
 #include "classes/localize.h"
 #include "classes/game_types.h"
 #include "classes/material_system.h"
+#include "classes/mdl_cache.h"
 #include "classes/studio_render.h"
 #include "classes/physics_surface_props.h"
 
@@ -112,6 +113,7 @@ public:
 	game_localize* localize						= nullptr;
 	game_client_types* game_types				= nullptr;
 	game_material_system* material_system		= nullptr;
+	game_mdl_cache* mdl_cache					= nullptr;
 	game_studio_render* studio_render			= nullptr;
 	game_input_system* input_system				= nullptr;
 	game_physics_surface_props* physics			= nullptr;
