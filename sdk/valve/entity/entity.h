@@ -27,6 +27,12 @@ public:
 	DATAMAP(this->prediction_map(), "m_angAbsRotation", abs_rotation, q_angle)
 
 	DATAMAP(this->description_map(), "m_rgflCoordinateFrame", coordinate_frame, const matrix_3x4&)
+
+	[[nodiscard]] bool physics_run_think(game_think_method think_method = think_fire_all_functions)
+	{
+		static auto physics_run_think_original = SEARCH(modules->client, signatures::entity::physics_run_think::signature()).reinterpret<bool(__thiscall*)(base_entity*, game_think_method)>();
+		return physics_run_think_original(this, think_method);
+	}
 };
 
 class base_animating : public base_entity
