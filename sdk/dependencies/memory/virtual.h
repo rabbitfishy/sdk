@@ -63,17 +63,17 @@ enum dereference : std::size_t
 class game_address
 {
 public:
-	explicit game_address() : base{ } {}
-	~game_address() {}
+	explicit game_address() : base{ } { }
+	~game_address() { }
 
 	// pass by offset and pointer.
-	explicit game_address(std::uintptr_t address) : base{ address } {}
-	explicit game_address(const void* address) : base{ reinterpret_cast<std::uintptr_t>(address) } {}
+	explicit game_address(std::uintptr_t address) : base{ address } { }
+	explicit game_address(const void* address) : base{ reinterpret_cast<std::uintptr_t>(address) } { }
 
 	// arithmetic operators for native types.
-	operator std::uintptr_t() { return this->base; }
-	operator void* () { return reinterpret_cast<void*>(this->base); }
-	operator const void* () { return reinterpret_cast<const void*>(this->base); }
+	operator std::uintptr_t()	{ return this->base; }
+	operator void* ()			{ return reinterpret_cast<void*>(this->base); }
+	operator const void* ()		{ return reinterpret_cast<const void*>(this->base); }
 
 	// cast pointer.
 	template<typename c = game_address>
@@ -201,4 +201,3 @@ private:
 
 #define ADDRESS( pointer ) game_address( pointer )
 #define SEARCH( modules, signatures ) ADDRESS( scanner->scan( modules, signatures ) )
-
