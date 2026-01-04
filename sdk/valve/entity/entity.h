@@ -125,6 +125,13 @@ public:
 	NETVAR("CBasePlayer->m_nTickBase", tick_base, int)
 	NETVAR("CBasePlayer->m_iObserverMode", observer_mode, int)
 
+	NETVAR_OFFSET("CBasePlayer->m_hViewEntity", -0xC, get_button_disabled, int)
+	NETVAR_OFFSET("CBasePlayer->m_hViewEntity", -0x8, get_button_forced, int)
+	DATAMAP(this->prediction_map(), "m_nButtons", get_buttons, int)
+	DATAMAP(this->prediction_map(), "m_afButtonLast", get_button_last, int)
+	DATAMAP(this->prediction_map(), "m_afButtonPressed", get_button_pressed, int)
+	DATAMAP(this->prediction_map(), "m_afButtonReleased", get_button_released, int)
+
 	NETVAR_PTR("CBasePlayer->m_Local", local_data, player_local_data)
 
 	NETVAR("CBasePlayer->m_aimPunchAngle", aim_punch, q_angle)
@@ -137,7 +144,31 @@ public:
 
 	NETVAR("CBasePlayer->m_hGroundEntity", ground_entity_handle, base_handle)
 
+	NETVAR_OFFSET("CBasePlayer->m_hViewEntity", -0x4, get_current_command, game_user_cmd*)
+
 	base_combat_weapon* active_weapon();
+
+	[[nodiscard]] game_user_cmd& get_last_command()
+	{
+		return *SEARCH(modules->client, signatures::entity::get_last_command::signature()).add(0x2).reinterpret<game_user_cmd*>();
+	}
+
+	void pre_think()
+	{
+		virtuals->call<void>(this, 318);
+	}
+
+	void think()
+	{
+		virtuals->call<void>(this, 139);
+	}
+
+	void update_collision_bounds()
+	{
+		virtuals->call<void>(this, 340);
+	}
+
+	void post_think();
 
 	bool alive()
 	{
@@ -166,6 +197,7 @@ public:
 	NETVAR("CCSPlayer->m_bHasHelmet", helmet, bool)
 	NETVAR("CCSPlayer->m_bGunGameImmunity", immunity, bool)
 	NETVAR("CCSPlayer->m_bHasHeavyArmor", heavy_armor, bool)
+	NETVAR("CCSPlayer->m_bIsPlayerGhost", ghost, bool)
 
 	NETVAR_OFFSET("CCSPlayer->m_flLastExoJumpTime", 0x8, is_new_animation_state, bool)
 
@@ -225,7 +257,3 @@ public:
 	float bomb_timer(const float server_time) { return std::clamp(this->blow_time() - server_time, 0.f, this->bomb_timer_length()); }
 	float defuse_timer(const float server_time) { return std::clamp(this->defuse_countdown() - server_time, 0.f, this->defuse_length()); }
 };
-
-
-
-
