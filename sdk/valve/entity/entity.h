@@ -111,6 +111,12 @@ public:
 	game_weapon_info* weapon_data();
 };
 
+class player_local_data
+{
+public:
+	NETVAR("CLocal->m_flFallVelocity", fall_velocity, float)
+};
+
 class base_player : public base_animating_overlay
 {
 public:
@@ -118,6 +124,8 @@ public:
 	NETVAR("CBasePlayer->m_iHealth", health, int)
 	NETVAR("CBasePlayer->m_nTickBase", tick_base, int)
 	NETVAR("CBasePlayer->m_iObserverMode", observer_mode, int)
+
+	NETVAR_PTR("CBasePlayer->m_Local", local_data, player_local_data)
 
 	NETVAR("CBasePlayer->m_aimPunchAngle", aim_punch, q_angle)
 	NETVAR("CBasePlayer->m_viewPunchAngle", view_punch, q_angle)
@@ -217,6 +225,7 @@ public:
 	float bomb_timer(const float server_time) { return std::clamp(this->blow_time() - server_time, 0.f, this->bomb_timer_length()); }
 	float defuse_timer(const float server_time) { return std::clamp(this->defuse_countdown() - server_time, 0.f, this->defuse_length()); }
 };
+
 
 
 
