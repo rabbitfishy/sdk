@@ -118,7 +118,7 @@ public:
 			if (!this->valid(result))
 				return d{ };
 
-			result = *this->reinterpret<std::uintptr_t*>(result);
+			result = *reinterpret_cast<std::uintptr_t*>(result);
 		}
 
 		return (d)result;
@@ -137,7 +137,7 @@ public:
 		result = this->base + offset;
 
 		// get relative offset.
-		relative = *this->reinterpret<std::uint8_t*>(result);
+		relative = *reinterpret_cast<std::uint8_t*>(result);
 		if (!relative)
 			return r{ };
 
@@ -165,7 +165,7 @@ public:
 		result = this->base + offset;
 
 		// get relative offset.
-		relative = *this->reinterpret<std::uint32_t*>(result);
+		relative = *reinterpret_cast<std::uint32_t*>(result);
 		if (!relative)
 			return r{ };
 
