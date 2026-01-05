@@ -130,6 +130,7 @@ public:
 	NETVAR("CBasePlayer->m_iHealth", health, int)
 	NETVAR("CBasePlayer->m_nTickBase", tick_base, int)
 	NETVAR("CBasePlayer->m_iObserverMode", observer_mode, int)
+	NETVAR("CBasePlayer->m_nNextThinkTick", next_think_tick, int)
 
 	NETVAR_OFFSET("CBasePlayer->m_hViewEntity", -0xC, get_button_disabled, int)
 	NETVAR_OFFSET("CBasePlayer->m_hViewEntity", -0x8, get_button_forced, int)
